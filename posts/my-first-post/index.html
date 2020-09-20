@@ -1,4 +1,82 @@
-<!doctype html><html lang=en><head><title>Hello World :: sharksforarms</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="the test post content"><meta name=keywords content="keyword1,keyword2"><meta name=robots content="noodp"><link rel=canonical href=/posts/my-first-post/><link rel=stylesheet href=/assets/style.css><link rel=apple-touch-icon-precomposed sizes=144x144 href=/img/apple-touch-icon-144-precomposed.png><link rel="shortcut icon" href=/favicon.png><meta name=twitter:card content="summary"><meta name=twitter:site content="sharksforarms"><meta name=twitter:creator content="sharksforarms"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="Hello World :: sharksforarms"><meta property="og:description" content="something description something"><meta property="og:url" content="/posts/my-first-post/"><meta property="og:site_name" content="Hello World"><meta property="og:image" content="/"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:published_time" content="2020-09-19 00:00:00 +0000 UTC"></head><body class=orange><div class="container center headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>sharksforarms</div></a></div><div class=menu-trigger>menu</div></div><nav class=menu><ul class="menu__inner menu__inner--desktop"><li><a href=/about>About</a></li></ul><ul class="menu__inner menu__inner--mobile"><li><a href=/about>About</a></li></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=/posts/my-first-post/>Hello World</a></h1><div class=post-meta><span class=post-date>2020-09-19 [Updated: 2020-09-19]</span>
+<!doctype html><html lang=en><head><title>Hello World :: sharksforarms</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="the test post content
+use deku::prelude::*; use hexlit::hex; use std::convert::{TryFrom, TryInto}; use std::net::Ipv4Addr; /// Ipv4 Header /// ```text /// 0 1 2 3 /// 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 /// +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ /// |Version| IHL | DSCP |ECN| Total Length | /// +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ /// | Identification |Flags| Fragment Offset | /// +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ /// | Time to Live | Protocol | Header Checksum | /// +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ /// | Source Address | /// +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ /// | Destination Address | /// +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ /// | Options | Padding | /// +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ /// ``` #[derive(Debug, PartialEq, DekuRead, DekuWrite)] #[deku(endian = &amp;#34;big&amp;#34;)] pub struct Ipv4Header { #[deku(bits = &amp;#34;4&amp;#34;)] pub version: u8, // Version  #[deku(bits = &amp;#34;4&amp;#34;)] pub ihl: u8, // Internet Header Length  #[deku(bits = &amp;#34;6&amp;#34;)] pub dscp: u8, // Differentiated Services Code Point  #[deku(bits = &amp;#34;2&amp;#34;)] pub ecn: u8, // Explicit Congestion Notification  pub length: u16, // Total Length  pub identification: u16, // Identification  #[deku(bits = &amp;#34;3&amp;#34;)] pub flags: u8, // Flags  #[deku(bits = &amp;#34;13&amp;#34;)] pub offset: u16, // Fragment Offset  pub ttl: u8, // Time To Live  pub protocol: u8, // Protocol  pub checksum: u16, // Header checksum  pub src: Ipv4Addr, // Source IP Address  pub dst: Ipv4Addr, // Destination IP Address  // options  // padding } fn main() { let test_data = hex!"><meta name=keywords content="keyword1,keyword2"><meta name=robots content="noodp"><link rel=canonical href=/posts/my-first-post/><link rel=stylesheet href=/assets/style.css><link rel=apple-touch-icon-precomposed sizes=144x144 href=/img/apple-touch-icon-144-precomposed.png><link rel="shortcut icon" href=/favicon.png><meta name=twitter:card content="summary"><meta name=twitter:site content="sharksforarms"><meta name=twitter:creator content="sharksforarms"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="Hello World :: sharksforarms"><meta property="og:description" content="something description something"><meta property="og:url" content="/posts/my-first-post/"><meta property="og:site_name" content="Hello World"><meta property="og:image" content="/"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:published_time" content="2020-09-19 00:00:00 +0000 UTC"></head><body class=orange><div class="container center headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>sharksforarms</div></a></div><div class=menu-trigger>menu</div></div><nav class=menu><ul class="menu__inner menu__inner--desktop"><li><a href=/about>About</a></li></ul><ul class="menu__inner menu__inner--mobile"><li><a href=/about>About</a></li></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=/posts/my-first-post/>Hello World</a></h1><div class=post-meta><span class=post-date>2020-09-19 [Updated: 2020-09-19]</span>
 <span class=post-author>:: sharksforarms</span></div><span class=post-tags>#<a href=/tags/tag1/>tag1</a>&nbsp;
-#<a href=/tags/tag2/>tag2</a>&nbsp;</span><div class=post-content><div><p>the test post content</p></div></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2020 Powered by <a href=http://gohugo.io>Hugo</a></span>
+#<a href=/tags/tag2/>tag2</a>&nbsp;</span><div class=post-content><div><p>the test post content</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#66d9ef>use</span> deku::prelude::<span style=color:#f92672>*</span>;
+<span style=color:#66d9ef>use</span> hexlit::hex;
+<span style=color:#66d9ef>use</span> std::convert::{TryFrom, TryInto};
+<span style=color:#66d9ef>use</span> std::net::Ipv4Addr;
+
+<span style=color:#e6db74>/// Ipv4 Header
+</span><span style=color:#e6db74>/// ```text
+</span><span style=color:#e6db74>///     0                   1                   2                   3
+</span><span style=color:#e6db74>///     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+</span><span style=color:#e6db74>///    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</span><span style=color:#e6db74>///    |Version|  IHL  |    DSCP   |ECN|         Total Length          |
+</span><span style=color:#e6db74>///    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</span><span style=color:#e6db74>///    |         Identification        |Flags|      Fragment Offset    |
+</span><span style=color:#e6db74>///    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</span><span style=color:#e6db74>///    |  Time to Live |    Protocol   |         Header Checksum       |
+</span><span style=color:#e6db74>///    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</span><span style=color:#e6db74>///    |                       Source Address                          |
+</span><span style=color:#e6db74>///    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</span><span style=color:#e6db74>///    |                    Destination Address                        |
+</span><span style=color:#e6db74>///    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</span><span style=color:#e6db74>///    |                    Options                    |    Padding    |
+</span><span style=color:#e6db74>///    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</span><span style=color:#e6db74>/// ```
+</span><span style=color:#e6db74></span><span style=color:#75715e>#[derive(Debug, PartialEq, DekuRead, DekuWrite)]</span>
+<span style=color:#75715e>#[deku(endian = </span><span style=color:#e6db74>&#34;big&#34;</span><span style=color:#75715e>)]</span>
+<span style=color:#66d9ef>pub</span> <span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>Ipv4Header</span> {
+    <span style=color:#75715e>#[deku(bits = </span><span style=color:#e6db74>&#34;4&#34;</span><span style=color:#75715e>)]</span>
+    <span style=color:#66d9ef>pub</span> version: <span style=color:#66d9ef>u8</span>, <span style=color:#75715e>// Version
+</span><span style=color:#75715e></span>    <span style=color:#75715e>#[deku(bits = </span><span style=color:#e6db74>&#34;4&#34;</span><span style=color:#75715e>)]</span>
+    <span style=color:#66d9ef>pub</span> ihl: <span style=color:#66d9ef>u8</span>, <span style=color:#75715e>// Internet Header Length
+</span><span style=color:#75715e></span>    <span style=color:#75715e>#[deku(bits = </span><span style=color:#e6db74>&#34;6&#34;</span><span style=color:#75715e>)]</span>
+    <span style=color:#66d9ef>pub</span> dscp: <span style=color:#66d9ef>u8</span>, <span style=color:#75715e>// Differentiated Services Code Point
+</span><span style=color:#75715e></span>    <span style=color:#75715e>#[deku(bits = </span><span style=color:#e6db74>&#34;2&#34;</span><span style=color:#75715e>)]</span>
+    <span style=color:#66d9ef>pub</span> ecn: <span style=color:#66d9ef>u8</span>, <span style=color:#75715e>// Explicit Congestion Notification
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>pub</span> length: <span style=color:#66d9ef>u16</span>,         <span style=color:#75715e>// Total Length
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>pub</span> identification: <span style=color:#66d9ef>u16</span>, <span style=color:#75715e>// Identification
+</span><span style=color:#75715e></span>    <span style=color:#75715e>#[deku(bits = </span><span style=color:#e6db74>&#34;3&#34;</span><span style=color:#75715e>)]</span>
+    <span style=color:#66d9ef>pub</span> flags: <span style=color:#66d9ef>u8</span>, <span style=color:#75715e>// Flags
+</span><span style=color:#75715e></span>    <span style=color:#75715e>#[deku(bits = </span><span style=color:#e6db74>&#34;13&#34;</span><span style=color:#75715e>)]</span>
+    <span style=color:#66d9ef>pub</span> offset: <span style=color:#66d9ef>u16</span>, <span style=color:#75715e>// Fragment Offset
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>pub</span> ttl: <span style=color:#66d9ef>u8</span>,             <span style=color:#75715e>// Time To Live
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>pub</span> protocol: <span style=color:#66d9ef>u8</span>,        <span style=color:#75715e>// Protocol
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>pub</span> checksum: <span style=color:#66d9ef>u16</span>,       <span style=color:#75715e>// Header checksum
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>pub</span> src: <span style=color:#a6e22e>Ipv4Addr</span>,       <span style=color:#75715e>// Source IP Address
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>pub</span> dst: <span style=color:#a6e22e>Ipv4Addr</span>,       <span style=color:#75715e>// Destination IP Address
+</span><span style=color:#75715e></span>                             <span style=color:#75715e>// options
+</span><span style=color:#75715e></span>                             <span style=color:#75715e>// padding
+</span><span style=color:#75715e></span>}
+
+<span style=color:#66d9ef>fn</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#66d9ef>let</span> test_data <span style=color:#f92672>=</span> hex<span style=color:#f92672>!</span>(<span style=color:#e6db74>&#34;4500004b0f490000801163a591fea0ed91fd02cb&#34;</span>).to_vec();
+
+    <span style=color:#66d9ef>let</span> ip_header <span style=color:#f92672>=</span> Ipv4Header::try_from(test_data.as_ref()).unwrap();
+
+    assert_eq<span style=color:#f92672>!</span>(
+        Ipv4Header {
+            version: <span style=color:#ae81ff>4</span>,
+            ihl: <span style=color:#ae81ff>5</span>,
+            ecn: <span style=color:#ae81ff>0</span>,
+            dscp: <span style=color:#ae81ff>0</span>,
+            length: <span style=color:#ae81ff>75</span>,
+            identification: <span style=color:#ae81ff>0x0f49</span>,
+            flags: <span style=color:#ae81ff>0</span>,
+            offset: <span style=color:#ae81ff>0</span>,
+            ttl: <span style=color:#ae81ff>128</span>,
+            protocol: <span style=color:#ae81ff>17</span>,
+            checksum: <span style=color:#ae81ff>0x63a5</span>,
+            src: <span style=color:#a6e22e>Ipv4Addr</span>::new(<span style=color:#ae81ff>145</span>, <span style=color:#ae81ff>254</span>, <span style=color:#ae81ff>160</span>, <span style=color:#ae81ff>237</span>),
+            dst: <span style=color:#a6e22e>Ipv4Addr</span>::new(<span style=color:#ae81ff>145</span>, <span style=color:#ae81ff>253</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>203</span>),
+        },
+        ip_header
+    );
+
+    <span style=color:#66d9ef>let</span> ip_header_data: Vec<span style=color:#f92672>&lt;</span><span style=color:#66d9ef>u8</span><span style=color:#f92672>&gt;</span> <span style=color:#f92672>=</span> ip_header.try_into().unwrap();
+
+    assert_eq<span style=color:#f92672>!</span>(test_data, ip_header_data);
+}
+</code></pre></div></div></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2020 Powered by <a href=http://gohugo.io>Hugo</a></span>
 <span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span></div></div></footer><script src=/assets/main.js></script><script src=/assets/prism.js></script></div></body></html>
