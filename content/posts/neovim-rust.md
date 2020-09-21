@@ -32,10 +32,10 @@ an [Language Server Protocol](https://microsoft.github.io/language-server-protoc
 (LSP) client framework (`:help lsp`)
 
 This means, Neovim can act as a client to LSP servers (like rust-analyzer) and
-assist in building enchanced LSP tools.
+assist in building enhanced LSP tools.
 
 LSP facilitates programming language specific features such as go-to-definition,
-completion, refactoring, formatting, etc. The goal of LSP is to seperate
+completion, refactoring, formatting, etc. The goal of LSP is to separate
 language support and the editor.
 
 Why use LSP? Well, for one, it allows the developers of an editor to focus on the
@@ -86,7 +86,7 @@ call plug#end()
 
 To install the above run `:PlugInstall` in neovim.
 
-Enable syntax highlighting and file type identification, plugin and identing
+Enable syntax highlighting and file type identification, plugin and indenting
 ```vim
 syntax enable
 filetype plugin indent on
@@ -125,10 +125,10 @@ nvim_lsp.rust_analyzer.setup({ on_attach=on_attach })
 EOF
 ```
 
-Now when nvim is restarted, you should be able to auto-complete and view warnings
+Now when nvim is restarted, you should be able to autocomplete and view warnings
 and errors inside the editor! You'll notice, however, that the completion experience
 is not like what you might be use to in VSCode or other editors.
-Mostly surounding the lack `<Tab>` completion. Vim uses `<C-N>`!
+Mostly surrounding the lack `<Tab>` completion. Vim uses `<C-N>`!
 
 ![gif of tab not working](/neovim-rust/tab_complete_fail.gif "Tab Completion Fail")
 
