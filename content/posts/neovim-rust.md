@@ -72,7 +72,7 @@ call plug#begin('~/.vim/plugged')
 " Collection of common configurations for the Nvim LSP client
 Plug 'neovim/nvim-lspconfig'
 
-" Extentions to built-in LSP, for example, providing type inlay hints
+" Extensions to built-in LSP, for example, providing type inlay hints
 Plug 'tjdevries/lsp_extensions.nvim'
 
 " Autocompletion framework for built-in LSP
