@@ -1,9 +1,10 @@
 +++
 title = "About"
-date = "2020-09-19"
+date = ""
 author = "sharksforarms"
 +++
 
 # Hi there
 
-test about page
+This blog contains some development rambles from a Canadian Rust developer
+stuck at home

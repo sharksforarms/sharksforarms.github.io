@@ -17,6 +17,15 @@ title = "Contact"
 }
 </style>
 
+<p align="left">
+  <a style="text-decoration:none" href="https://twitter.com/sharksforarms">
+      <img style="display: inline-block" src="/social/twitter.png" />
+  </a>
+  <a style="text-decoration:none" href="https://github.com/sharksforarms">
+      <img style="display: inline-block" src="/social/github.png" />
+  </a>
+</p>
+
 <form action="https://formspree.io/mrgogbaa" method="POST" >
   <label>Your email:</label>
   </br>
