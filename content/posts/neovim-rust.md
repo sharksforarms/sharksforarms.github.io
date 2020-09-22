@@ -11,6 +11,12 @@ and rust-analyzer"""
 showFullContent = false
 +++
 
+{{< rawhtml >}}
+<p align="center">
+  <img src="/neovim-rust/cover.png" />
+</p>
+{{< /rawhtml >}}
+
 I have used many editors in the last 5 years.
 
 Sublime Text, Vim, then CLion, then VSCode, back to Vim, briefly Onivim and now Neovim.
@@ -207,3 +213,5 @@ to add more language servers (just like we did with rust-analyzer) to have a ful
 featured cross-language experience.
 
 Thanks for reading!
+
+Questions? Found an error? [Create an issue on Github!](https://github.com/sharksforarms/sharksforarms.github.io/issues/new)
