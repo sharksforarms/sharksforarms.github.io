@@ -161,16 +161,15 @@ What about code navigation? (`:help lsp`)
 
 ```vim
 " Code navigation shortcuts
-nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
-nnoremap <silent> <c+]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-inoremap <silent> <c+k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> gT    <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> rn    <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
 ```
 
 ![gif of code navigation](/neovim-rust/code_nav.gif "Code Navigation")
@@ -193,6 +192,16 @@ autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
 " Goto previous/next diagnostic warning/error
 nnoremap <silent> g[ <cmd>PrevDiagnosticCycle<cr>
 nnoremap <silent> g] <cmd>NextDiagnosticCycle<cr>
+```
+
+You may notice, there's a slight vertical jitter when a new diagnostic comes in.
+
+To avoid this, you can set `signcolumn`
+
+```rust
+" have a fixed column for the diagnostics to appear in
+" this removes the jitter when warnings/errors flow in
+set signcolumn=yes
 ```
 
 ![gif of diagnostics](/neovim-rust/diagnostic.gif "Diagnostics")
