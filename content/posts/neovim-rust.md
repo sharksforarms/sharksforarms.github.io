@@ -134,7 +134,7 @@ EOF
 Now when nvim is restarted, you should be able to autocomplete and view warnings
 and errors inside the editor! You'll notice, however, that the completion experience
 is not like what you might be use to in VSCode or other editors.
-Mostly surrounding the lack `<Tab>` completion. Vim uses `<C-N>`!
+Mostly surrounding the lack of `<Tab>` completion. Vim uses `<C-N>`!
 
 ![gif of tab not working](/neovim-rust/tab_complete_fail.gif "Tab Completion Fail")
 
@@ -207,10 +207,11 @@ autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
 
 ![image of inlay hints](/neovim-rust/inlayhints.png "Inlay Hints")
 
-To conclude, this introduces a basic and flexible setup for Rust development
-which is also extensible to other languages. This setup allows you, the developer,
-to add more language servers (just like we did with rust-analyzer) to have a full
-featured cross-language experience.
+To conclude, this introduces a basic and flexible setup for Rust development.
+Here's the best part though, it's simple to configure
+[more languages servers](https://github.com/neovim/nvim-lspconfig#configurations)!
+This setup allows you, the developer, to add more lsp'
+(just like we did with rust-analyzer) to have a full featured cross-language experience.
 
 Thanks for reading!
 
