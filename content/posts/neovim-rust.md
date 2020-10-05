@@ -174,6 +174,15 @@ nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
 
 ![gif of code navigation](/neovim-rust/code_nav.gif "Code Navigation")
 
+Code actions are also very useful.
+
+```vim
+nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
+```
+
+![gif of code actions](/neovim-rust/code_action.gif "Code Action")
+
+
 Let's improve the diagnostics.
 
 ```vim
@@ -194,6 +203,8 @@ nnoremap <silent> g[ <cmd>PrevDiagnosticCycle<cr>
 nnoremap <silent> g] <cmd>NextDiagnosticCycle<cr>
 ```
 
+![gif of diagnostics](/neovim-rust/diagnostic.gif "Diagnostics")
+
 You may notice, there's a slight vertical jitter when a new diagnostic comes in.
 
 To avoid this, you can set `signcolumn`
@@ -203,8 +214,6 @@ To avoid this, you can set `signcolumn`
 " this removes the jitter when warnings/errors flow in
 set signcolumn=yes
 ```
-
-![gif of diagnostics](/neovim-rust/diagnostic.gif "Diagnostics")
 
 And to cap it off, let's enable inlay hints!
 
@@ -225,3 +234,7 @@ This setup allows you, the developer, to add more lsp'
 Thanks for reading!
 
 Questions? Found an error? [Create an issue on Github!](https://github.com/sharksforarms/sharksforarms.github.io/issues/new)
+
+Edits:
+- 2020-09-23: Added note about `signcolumn`
+- 2020-10-05: Added note about code actions and gif
