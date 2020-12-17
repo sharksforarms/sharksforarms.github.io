@@ -62,8 +62,8 @@ Let's start with the prerequisites:
   - Currently, 0.5 can be found as a
   [nightly download](https://github.com/neovim/neovim/releases/nightly),
   in the [unstable PPA](https://github.com/neovim/neovim/wiki/Installing-Neovim#ubuntu)
-  or other nightly sources. I am currently living on the bleeding edge: building
-  and installing neovim from the master git branch.
+  or other nightly sources. I am currently living on the bleeding edge: [building
+  and installing neovim from the master git branch](https://github.com/neovim/neovim#install-from-source).
 - [Install rust-analyzer](https://rust-analyzer.github.io/manual.html#rust-analyzer-language-server-binary)
 Note: The binary must be in your `PATH`
 
@@ -84,13 +84,10 @@ Plug 'tjdevries/lsp_extensions.nvim'
 " Autocompletion framework for built-in LSP
 Plug 'nvim-lua/completion-nvim'
 
-" Diagnostic navigation and settings for built-in LSP
-Plug 'nvim-lua/diagnostic-nvim'
-
 call plug#end()
 ```
 
-To install the above run `:PlugInstall` in neovim.
+To install the above run the `:PlugInstall` command in neovim, or start it with `nvim +PlugInstall`.
 
 Enable syntax highlighting and file type identification, plugin and indenting
 ```vim
@@ -98,7 +95,7 @@ syntax enable
 filetype plugin indent on
 ```
 
-Let's setup the rust-analyzer LSP and attach completion and diagnostics functions
+Let's setup the rust-analyzer LSP and add completion and enable diagnostics
 
 ```vim
 " Set completeopt to have a better completion experience
@@ -116,18 +113,24 @@ set shortmess+=c
 lua <<EOF
 
 -- nvim_lsp object
-local nvim_lsp = require'nvim_lsp'
+local nvim_lsp = require'lspconfig'
 
--- function to attach completion and diagnostics
--- when setting up lsp
+-- function to attach completion when setting up lsp
 local on_attach = function(client)
     require'completion'.on_attach(client)
-    require'diagnostic'.on_attach(client)
 end
 
 -- Enable rust_analyzer
 nvim_lsp.rust_analyzer.setup({ on_attach=on_attach })
 
+-- Enable diagnostics
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = true,
+    signs = true,
+    update_in_insert = true,
+  }
+)
 EOF
 ```
 
@@ -183,24 +186,18 @@ nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
 ![gif of code actions](/neovim-rust/code_action.gif "Code Action")
 
 
-Let's improve the diagnostics.
+Let's improve the diagnostics experience.
 
 ```vim
-" Visualize diagnostics
-let g:diagnostic_enable_virtual_text = 1
-let g:diagnostic_trimmed_virtual_text = '40'
-" Don't show diagnostics while in insert mode
-let g:diagnostic_insert_delay = 1
-
 " Set updatetime for CursorHold
 " 300ms of no cursor movement to trigger CursorHold
 set updatetime=300
 " Show diagnostic popup on cursor hold
-autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
+autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
 
 " Goto previous/next diagnostic warning/error
-nnoremap <silent> g[ <cmd>PrevDiagnosticCycle<cr>
-nnoremap <silent> g] <cmd>NextDiagnosticCycle<cr>
+nnoremap <silent> g[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> g] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 ```
 
 ![gif of diagnostics](/neovim-rust/diagnostic.gif "Diagnostics")
@@ -238,3 +235,4 @@ Questions? Found an error? [Create an issue on Github!](https://github.com/shark
 Edits:
 - 2020-09-23: Added note about `signcolumn`
 - 2020-10-05: Added note about code actions and gif
+- 2020-12-17: Updated diagnostics and lsp config to reflect latest neovim developments
