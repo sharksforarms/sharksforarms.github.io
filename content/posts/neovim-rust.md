@@ -137,7 +137,7 @@ EOF
 Now when nvim is restarted, you should be able to autocomplete and view warnings
 and errors inside the editor! You'll notice, however, that the completion experience
 is not like what you might be use to in VSCode or other editors.
-Mostly surrounding the lack of `<Tab>` completion. Vim uses `<C-N>`!
+Mostly surrounding the lack of `<Tab>` completion to navigate the menu. Vim uses `<C-N>`!
 
 ![gif of tab not working](/neovim-rust/tab_complete_fail.gif "Tab Completion Fail")
 
@@ -146,16 +146,13 @@ Mostly surrounding the lack of `<Tab>` completion. Vim uses `<C-N>`!
 (Found in `:help completion`)
 
 ```vim
-" Trigger completion with <Tab>
-inoremap <silent><expr> <TAB>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ completion#trigger_completion()
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
+" use <Tab> as trigger keys
+imap <Tab> <Plug>(completion_smart_tab)
+imap <S-Tab> <Plug>(completion_smart_s_tab)
 ```
 
 ![gif of tab working](/neovim-rust/tab_complete_works.gif "Tab Completion Working")
@@ -236,3 +233,5 @@ Edits:
 - 2020-09-23: Added note about `signcolumn`
 - 2020-10-05: Added note about code actions and gif
 - 2020-12-17: Updated diagnostics and lsp config to reflect latest neovim developments
+- 2020-12-23: Updated tab completion config to reflect latest
+[completion.nvim](https://github.com/nvim-lua/completion-nvim/commit/5c153f8ae094867a414cb2a7c0f59454299f17b3) developments
