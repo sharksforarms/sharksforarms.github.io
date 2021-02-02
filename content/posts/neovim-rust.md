@@ -214,7 +214,7 @@ And to cap it off, let's enable inlay hints!
 ```vim
 " Enable type inlay hints
 autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
-\ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment" }
+\ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
 ```
 
 ![image of inlay hints](/neovim-rust/inlayhints.png "Inlay Hints")
@@ -235,3 +235,4 @@ Edits:
 - 2020-12-17: Updated diagnostics and lsp config to reflect latest neovim developments
 - 2020-12-23: Updated tab completion config to reflect latest
 [completion.nvim](https://github.com/nvim-lua/completion-nvim/commit/5c153f8ae094867a414cb2a7c0f59454299f17b3) developments
+- 2021-02-02: Added `enabled` to `inlay_hints` function call to support more hints
