@@ -78,24 +78,39 @@ call plug#begin('~/.vim/plugged')
 " Collection of common configurations for the Nvim LSP client
 Plug 'neovim/nvim-lspconfig'
 
-" Extensions to built-in LSP, for example, providing type inlay hints
-Plug 'nvim-lua/lsp_extensions.nvim'
+" Completion framework
+Plug 'hrsh7th/nvim-cmp'
 
-" Autocompletion framework for built-in LSP
-Plug 'nvim-lua/completion-nvim'
+" LSP completion source for nvim-cmp
+Plug 'hrsh7th/cmp-nvim-lsp'
+
+" Snippet completion source for nvim-cmp
+Plug 'hrsh7th/cmp-vsnip'
+
+" Other usefull completion sources
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-buffer'
+
+" See hrsh7th's other plugins for more completion sources!
+
+" To enable more of the features of rust-analyzer, such as inlay hints and more!
+Plug 'simrat39/rust-tools.nvim'
+
+" Fuzzy finder
+" Optional
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
+" Color scheme used in the GIFs!
+" Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
 ```
 
 To install the above run the `:PlugInstall` command in neovim, or start it with `nvim +PlugInstall`.
 
-Enable syntax highlighting and file type identification, plugin and indenting
-```vim
-syntax enable
-filetype plugin indent on
-```
-
-Let's setup the rust-analyzer LSP and add completion and enable diagnostics
+Let's setup the rust-analyzer LSP and start configuring the completion
 
 ```vim
 " Set completeopt to have a better completion experience
@@ -108,54 +123,79 @@ set completeopt=menuone,noinsert,noselect
 " Avoid showing extra messages when using completion
 set shortmess+=c
 
-" Configure LSP
-" https://github.com/neovim/nvim-lspconfig#rust_analyzer
+" Configure LSP through rust-tools.nvim plugin.
+" rust-tools will configure and enable certain LSP features for us.
+" See https://github.com/simrat39/rust-tools.nvim#configuration
 lua <<EOF
-
--- nvim_lsp object
 local nvim_lsp = require'lspconfig'
 
--- function to attach completion when setting up lsp
-local on_attach = function(client)
-    require'completion'.on_attach(client)
-end
+local opts = {
+    tools = { -- rust-tools options
+        autoSetHints = true,
+        hover_with_actions = true,
+        inlay_hints = {
+            show_parameter_hints = false,
+            parameter_hints_prefix = "",
+            other_hints_prefix = "",
+        },
+    },
 
--- Enable rust_analyzer
-nvim_lsp.rust_analyzer.setup({ on_attach=on_attach })
+    -- all the opts to send to nvim-lspconfig
+    -- these override the defaults set by rust-tools.nvim
+    -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
+    server = {}, -- rust-analyer options
+}
 
--- Enable diagnostics
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = true,
-    signs = true,
-    update_in_insert = true,
-  }
-)
+require('rust-tools').setup(opts)
+EOF
+
+" Setup Completion
+" See https://github.com/hrsh7th/nvim-cmp#basic-configuration
+lua <<EOF
+local cmp = require'cmp'
+cmp.setup({
+  -- Enable LSP snippets
+  snippet = {
+    expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = {
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    -- Add tab support
+    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+    ['<Tab>'] = cmp.mapping.select_next_item(),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Insert,
+      select = true,
+    })
+  },
+
+  -- Installed sources
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+    { name = 'path' },
+    { name = 'buffer' },
+  },
+})
 EOF
 ```
 
 Now when nvim is restarted, you should be able to autocomplete and view warnings
-and errors inside the editor! You'll notice, however, that the completion experience
-is not like what you might be use to in VSCode or other editors.
-Mostly surrounding the lack of `<Tab>` completion to navigate the menu. Vim uses `<C-N>`!
+and errors inside the editor!
 
-![gif of tab not working](/neovim-rust/tab_complete_fail.gif "Tab Completion Fail")
+![gif of completionm](/neovim-rust/completion.gif "Completion")
 
-`<Tab>` completion can be accomplished with the following
+And inlay hints!
 
-(Found in `:help completion`)
+![image of inlay hints](/neovim-rust/inlayhints.png "Inlay Hints")
 
-```vim
-" Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" use <Tab> as trigger keys
-imap <Tab> <Plug>(completion_smart_tab)
-imap <S-Tab> <Plug>(completion_smart_s_tab)
-```
-
-![gif of tab working](/neovim-rust/tab_complete_works.gif "Tab Completion Working")
 
 What about code navigation? (`:help lsp`)
 
@@ -169,7 +209,7 @@ nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
 ```
 
 ![gif of code navigation](/neovim-rust/code_nav.gif "Code Navigation")
@@ -209,16 +249,6 @@ To avoid this, you can set `signcolumn`
 set signcolumn=yes
 ```
 
-And to cap it off, let's enable inlay hints!
-
-```vim
-" Enable type inlay hints
-autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
-\ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
-```
-
-![image of inlay hints](/neovim-rust/inlayhints.png "Inlay Hints")
-
 To conclude, this introduces a basic and flexible setup for Rust development.
 Here's the best part though, it's simple to configure
 [more languages servers](https://github.com/neovim/nvim-lspconfig#configurations)!
@@ -230,6 +260,7 @@ Thanks for reading!
 Questions? Found an error? [Create an issue on Github!](https://github.com/sharksforarms/sharksforarms.github.io/issues/new)
 
 Edits:
+- 2021-09-01: Updated completion framework, enhanced LSP with rust-tools.nvim and more!
 - 2020-09-23: Added note about `signcolumn`
 - 2020-10-05: Added note about code actions and gif
 - 2020-12-17: Updated diagnostics and lsp config to reflect latest neovim developments
