@@ -1,46 +1,158 @@
-<!doctype html><html lang=en><head><title>Neovim and Rust :: sharksforarms</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="I have used many editors in the last 5 years.
+<!doctype html><html lang=en>
+<head>
+<title>Neovim and Rust :: sharksforarms</title>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="I have used many editors in the last 5 years.
 Sublime Text, Vim, then CLion, then VSCode, back to Vim, briefly Onivim and now Neovim.
 I find it important to experiment with different editors and IDEs in order to have an idea of what powers they hold and how they could be included in your development toolbox.
-Over the last couple months, I have been looking at ways to &amp;ldquo;sharpen&amp;rdquo; my development toolset and have been playing around with multiple vim configurations, one in which I&amp;rsquo;d like to share today."><meta name=keywords content="vim,neovim,rust"><meta name=robots content="noodp"><link rel=canonical href=/posts/neovim-rust/><link rel=stylesheet href=/assets/style.css><link rel=apple-touch-icon-precomposed sizes=144x144 href=/img/apple-touch-icon-144-precomposed.png><link rel="shortcut icon" href=/favicon.png><meta name=twitter:card content="summary"><meta name=twitter:site content="sharksforarms"><meta name=twitter:creator content="sharksforarms"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="Neovim and Rust :: sharksforarms"><meta property="og:description" content="An effective Rust development experience with Neovim LSP client
-and rust-analyzer"><meta property="og:url" content="/posts/neovim-rust/"><meta property="og:site_name" content="Neovim and Rust"><meta property="og:image" content="/"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:published_time" content="2020-09-21 00:00:00 +0000 UTC"></head><body class=orange><div class="container center headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>sharksforarms</div></a></div><div class=menu-trigger>menu</div></div><nav class=menu><ul class="menu__inner menu__inner--desktop"><li><a href=/>Home</a></li><li><a href=/about>About</a></li><li><a href=/contact>Contact</a></li></ul><ul class="menu__inner menu__inner--mobile"><li><a href=/>Home</a></li><li><a href=/about>About</a></li><li><a href=/contact>Contact</a></li></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=/posts/neovim-rust/>Neovim and Rust</a></h1><div class=post-meta><span class=post-date>2020-09-21 [Updated: 2021-02-02]</span>
-<span class=post-author>:: sharksforarms</span></div><span class=post-tags>#<a href=/tags/vim/>vim</a>&nbsp;
+Over the last couple months, I have been looking at ways to &amp;ldquo;sharpen&amp;rdquo; my development toolset and have been playing around with multiple vim configurations, one in which I&amp;rsquo;d like to share today.">
+<meta name=keywords content="vim,neovim,rust">
+<meta name=robots content="noodp">
+<link rel=canonical href=/posts/neovim-rust/>
+<link rel=stylesheet href=/assets/style.css>
+<link rel=apple-touch-icon-precomposed sizes=144x144 href=/img/apple-touch-icon-144-precomposed.png>
+<link rel="shortcut icon" href=/favicon.png>
+<meta name=twitter:card content="summary">
+<meta name=twitter:site content="sharksforarms">
+<meta name=twitter:creator content="sharksforarms">
+<meta property="og:locale" content="en">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Neovim and Rust :: sharksforarms">
+<meta property="og:description" content="An effective Rust development experience with Neovim LSP client
+and rust-analyzer">
+<meta property="og:url" content="/posts/neovim-rust/">
+<meta property="og:site_name" content="Neovim and Rust">
+<meta property="og:image" content="/">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+<meta property="article:published_time" content="2020-09-21 00:00:00 +0000 UTC">
+</head>
+<body class=orange>
+<div class="container center headings--one-size">
+<header class=header>
+<div class=header__inner>
+<div class=header__logo>
+<a href=/>
+<div class=logo>
+sharksforarms
+</div>
+</a>
+</div>
+<div class=menu-trigger>menu</div>
+</div>
+<nav class=menu>
+<ul class="menu__inner menu__inner--desktop">
+<li><a href=/>Home</a></li>
+<li><a href=/about>About</a></li>
+<li><a href=/contact>Contact</a></li>
+</ul>
+<ul class="menu__inner menu__inner--mobile">
+<li><a href=/>Home</a></li>
+<li><a href=/about>About</a></li>
+<li><a href=/contact>Contact</a></li>
+</ul>
+</nav>
+</header>
+<div class=content>
+<div class=post>
+<h1 class=post-title>
+<a href=/posts/neovim-rust/>Neovim and Rust</a></h1>
+<div class=post-meta>
+<span class=post-date>
+2020-09-21 [Updated: 2021-09-01]
+</span>
+<span class=post-author>:: sharksforarms</span>
+</div>
+<span class=post-tags>
+#<a href=/tags/vim/>vim</a>&nbsp;
 #<a href=/tags/neovim/>neovim</a>&nbsp;
-#<a href=/tags/rust/>rust</a>&nbsp;</span><div class=post-content><div><p align=center><img src=/neovim-rust/cover.png></p><p>I have used many editors in the last 5 years.</p><p>Sublime Text, Vim, then CLion, then VSCode, back to Vim, briefly Onivim and now Neovim.</p><p>I find it important to experiment with different editors and IDEs in order to
+#<a href=/tags/rust/>rust</a>&nbsp;
+</span>
+<div class=post-content><div>
+<p align=center>
+<img src=/neovim-rust/cover.png>
+</p>
+<p>I have used many editors in the last 5 years.</p>
+<p>Sublime Text, Vim, then CLion, then VSCode, back to Vim, briefly Onivim and now Neovim.</p>
+<p>I find it important to experiment with different editors and IDEs in order to
 have an idea of what powers they hold and how they could be included in your
-development toolbox.</p><p>Over the last couple months, I have been looking at ways to &ldquo;sharpen&rdquo; my development
+development toolbox.</p>
+<p>Over the last couple months, I have been looking at ways to &ldquo;sharpen&rdquo; my development
 toolset and have been playing around with multiple vim configurations, one in which
-I&rsquo;d like to share today.</p><p><a href=https://neovim.io/>Neovim</a> is a fork of vim, which is focused on extensibility
+I&rsquo;d like to share today.</p>
+<p><a href=https://neovim.io/>Neovim</a> is a fork of vim, which is focused on extensibility
 and usability. An example of this is the ability to use Lua instead of VimL for
-plugins providing greater flexibility for extending the editor.</p><p>In the 0.5 release of Neovim (currently nightly), the developers have introduced
+plugins providing greater flexibility for extending the editor.</p>
+<p>In the 0.5 release of Neovim (currently nightly), the developers have introduced
 an <a href=https://microsoft.github.io/language-server-protocol/>Language Server Protocol</a>
-(LSP) client framework (<code>:help lsp</code>)</p><p>This means, Neovim can act as a client to LSP servers (like rust-analyzer) and
-assist in building enhanced LSP tools.</p><p>LSP facilitates programming language specific features such as go-to-definition,
+(LSP) client framework (<code>:help lsp</code>)</p>
+<p>This means, Neovim can act as a client to LSP servers (like rust-analyzer) and
+assist in building enhanced LSP tools.</p>
+<p>LSP facilitates programming language specific features such as go-to-definition,
 completion, refactoring, formatting, etc. The goal of LSP is to separate
-language support and the editor.</p><p>Why use LSP? Well, for one, it allows the developers of an editor to focus on the
+language support and the editor.</p>
+<p>Why use LSP? Well, for one, it allows the developers of an editor to focus on the
 editor and not of specific language support. This is a win-win for language providers
 and those who release tooling. This is turning a X*Y problem into X+Y.
 (Where X is the number of editors and Y is the number of languages). There are LSP
-servers available for almost every language out there.</p><p><strong>So how do we configure Neovim LSP with rust-analyzer? Simple!</strong></p><p>Check out this repository for the complete configuration and more</p><p><a href=https://github.com/sharksforarms/vim-rust>https://github.com/sharksforarms/vim-rust</a></p><p>Let&rsquo;s start with the prerequisites:</p><ul><li>Neovim >= 0.5, see <a href=https://github.com/neovim/neovim/wiki/Installing-Neovim>Installing Neovim</a><ul><li>Currently, 0.5 can be found as a
+servers available for almost every language out there.</p>
+<p><strong>So how do we configure Neovim LSP with rust-analyzer? Simple!</strong></p>
+<p>Check out this repository for the complete configuration and more</p>
+<p><a href=https://github.com/sharksforarms/vim-rust>https://github.com/sharksforarms/vim-rust</a></p>
+<p>Let&rsquo;s start with the prerequisites:</p>
+<ul>
+<li>Neovim >= 0.5, see <a href=https://github.com/neovim/neovim/wiki/Installing-Neovim>Installing Neovim</a>
+<ul>
+<li>Currently, 0.5 can be found as a
 <a href=https://github.com/neovim/neovim/releases/nightly>nightly download</a>,
 in the <a href=https://github.com/neovim/neovim/wiki/Installing-Neovim#ubuntu>unstable PPA</a>
 or other nightly sources. I am currently living on the bleeding edge: <a href=https://github.com/neovim/neovim#install-from-source>building
-and installing neovim from the master git branch</a>.</li></ul></li><li><a href=https://rust-analyzer.github.io/manual.html#rust-analyzer-language-server-binary>Install rust-analyzer</a>
-Note: The binary must be in your <code>PATH</code></li></ul><p>Diving in, let&rsquo;s install some plugins.</p><p>The plugin manager used here is <a href=https://github.com/junegunn/vim-plug>vim-plug</a>,
-but any plugin manager can be used.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vim data-lang=vim><span style=color:#a6e22e>call</span> <span style=color:#a6e22e>plug</span>#<span style=color:#a6e22e>begin</span>(<span style=color:#e6db74>&#39;~/.vim/plugged&#39;</span>)<span style=color:#960050;background-color:#1e0010>
+and installing neovim from the master git branch</a>.</li>
+</ul>
+</li>
+<li><a href=https://rust-analyzer.github.io/manual.html#rust-analyzer-language-server-binary>Install rust-analyzer</a>
+Note: The binary must be in your <code>PATH</code></li>
+</ul>
+<p>Diving in, let&rsquo;s install some plugins.</p>
+<p>The plugin manager used here is <a href=https://github.com/junegunn/vim-plug>vim-plug</a>,
+but any plugin manager can be used.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vim data-lang=vim><span style=color:#a6e22e>call</span> <span style=color:#a6e22e>plug</span>#<span style=color:#a6e22e>begin</span>(<span style=color:#e6db74>&#39;~/.vim/plugged&#39;</span>)<span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
 </span><span style=color:#75715e>&#34; Collection of common configurations for the Nvim LSP client</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;neovim/nvim-lspconfig&#39;</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; Extensions to built-in LSP, for example, providing type inlay hints</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;nvim-lua/lsp_extensions.nvim&#39;</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#75715e>&#34; Completion framework</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;hrsh7th/nvim-cmp&#39;</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; Autocompletion framework for built-in LSP</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;nvim-lua/completion-nvim&#39;</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#75715e>&#34; LSP completion source for nvim-cmp</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;hrsh7th/cmp-nvim-lsp&#39;</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
+</span><span style=color:#75715e>&#34; Snippet completion source for nvim-cmp</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;hrsh7th/cmp-vsnip&#39;</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
+</span><span style=color:#75715e>&#34; Other usefull completion sources</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;hrsh7th/cmp-path&#39;</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;hrsh7th/cmp-buffer&#39;</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
+</span><span style=color:#75715e>&#34; See hrsh7th&#39;s other plugins for more completion sources!</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
+</span><span style=color:#75715e>&#34; To enable more of the features of rust-analyzer, such as inlay hints and more!</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;simrat39/rust-tools.nvim&#39;</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
+</span><span style=color:#75715e>&#34; Fuzzy finder</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; Optional</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;nvim-lua/popup.nvim&#39;</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;nvim-lua/plenary.nvim&#39;</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>Plug</span> <span style=color:#e6db74>&#39;nvim-telescope/telescope.nvim&#39;</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
+</span><span style=color:#75715e>&#34; Color scheme used in the GIFs!</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; Plug &#39;arcticicestudio/nord-vim&#39;</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>call</span> <span style=color:#a6e22e>plug</span>#<span style=color:#a6e22e>end</span>()<span style=color:#960050;background-color:#1e0010>
-</span></code></pre></div><p>To install the above run the <code>:PlugInstall</code> command in neovim, or start it with <code>nvim +PlugInstall</code>.</p><p>Enable syntax highlighting and file type identification, plugin and indenting</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vim data-lang=vim><span style=color:#a6e22e>syntax</span> <span style=color:#a6e22e>enable</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>filetype</span> <span style=color:#a6e22e>plugin</span> <span style=color:#a6e22e>indent</span> <span style=color:#a6e22e>on</span><span style=color:#960050;background-color:#1e0010>
-</span></code></pre></div><p>Let&rsquo;s setup the rust-analyzer LSP and add completion and enable diagnostics</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vim data-lang=vim><span style=color:#75715e>&#34; Set completeopt to have a better completion experience</span><span style=color:#960050;background-color:#1e0010>
+</span></code></pre></div><p>To install the above run the <code>:PlugInstall</code> command in neovim, or start it with <code>nvim +PlugInstall</code>.</p>
+<p>Let&rsquo;s setup the rust-analyzer LSP and start configuring the completion</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vim data-lang=vim><span style=color:#75715e>&#34; Set completeopt to have a better completion experience</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; :help completeopt</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; menuone: popup even when there&#39;s only one match</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; noinsert: Do not insert text until a selection is made</span><span style=color:#960050;background-color:#1e0010>
@@ -50,41 +162,75 @@ but any plugin manager can be used.</p><div class=highlight><pre style=color:#f8
 </span><span style=color:#75715e>&#34; Avoid showing extra messages when using completion</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>shortmess</span>+=<span style=color:#a6e22e>c</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; Configure LSP</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; https://github.com/neovim/nvim-lspconfig#rust_analyzer</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#75715e>&#34; Configure LSP through rust-tools.nvim plugin.</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; rust-tools will configure and enable certain LSP features for us.</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; See https://github.com/simrat39/rust-tools.nvim#configuration</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>lua</span> &lt;&lt;<span style=color:#a6e22e>EOF</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>-- <span style=color:#a6e22e>nvim_lsp</span> <span style=color:#a6e22e>object</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>local</span> <span style=color:#a6e22e>nvim_lsp</span> = <span style=color:#a6e22e>require</span><span style=color:#e6db74>&#39;lspconfig&#39;</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>-- <span style=color:#66d9ef>function</span> <span style=color:#a6e22e>to</span> <span style=color:#a6e22e>attach</span> <span style=color:#a6e22e>completion</span> <span style=color:#a6e22e>when</span> <span style=color:#a6e22e>setting</span> <span style=color:#a6e22e>up</span> <span style=color:#a6e22e>lsp</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>local</span> <span style=color:#a6e22e>on_attach</span> = <span style=color:#66d9ef>function</span>(<span style=color:#a6e22e>client</span>)<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>    <span style=color:#a6e22e>require</span><span style=color:#e6db74>&#39;completion&#39;</span>.<span style=color:#a6e22e>on_attach</span>(<span style=color:#a6e22e>client</span>)<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>end</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>local</span> <span style=color:#a6e22e>opts</span> = {<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    <span style=color:#a6e22e>tools</span> = { -- <span style=color:#a6e22e>rust</span>-<span style=color:#a6e22e>tools</span> <span style=color:#a6e22e>options</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>        <span style=color:#a6e22e>autoSetHints</span> = <span style=color:#a6e22e>true</span>,<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>        <span style=color:#a6e22e>hover_with_actions</span> = <span style=color:#a6e22e>true</span>,<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>        <span style=color:#a6e22e>inlay_hints</span> = {<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>            <span style=color:#a6e22e>show_parameter_hints</span> = <span style=color:#a6e22e>false</span>,<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>            <span style=color:#a6e22e>parameter_hints_prefix</span> = <span style=color:#e6db74>&#34;&#34;</span>,<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>            <span style=color:#a6e22e>other_hints_prefix</span> = <span style=color:#e6db74>&#34;&#34;</span>,<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>        },<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    },<span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>-- <span style=color:#a6e22e>Enable</span> <span style=color:#a6e22e>rust_analyzer</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>nvim_lsp</span>.<span style=color:#a6e22e>rust_analyzer</span>.<span style=color:#a6e22e>setup</span>({ <span style=color:#a6e22e>on_attach</span>=<span style=color:#a6e22e>on_attach</span> })<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    -- <span style=color:#a6e22e>all</span> <span style=color:#a6e22e>the</span> <span style=color:#a6e22e>opts</span> <span style=color:#a6e22e>to</span> <span style=color:#a6e22e>send</span> <span style=color:#a6e22e>to</span> <span style=color:#a6e22e>nvim</span>-<span style=color:#a6e22e>lspconfig</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    -- <span style=color:#a6e22e>these</span> <span style=color:#a6e22e>override</span> <span style=color:#a6e22e>the</span> <span style=color:#a6e22e>defaults</span> <span style=color:#a6e22e>set</span> <span style=color:#a6e22e>by</span> <span style=color:#a6e22e>rust</span>-<span style=color:#a6e22e>tools</span>.<span style=color:#a6e22e>nvim</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    -- <span style=color:#a6e22e>see</span> <span style=color:#a6e22e>https</span>:<span style=color:#e6db74>//</span><span style=color:#a6e22e>github</span>.<span style=color:#a6e22e>com</span><span style=color:#e6db74>/neovim/</span><span style=color:#a6e22e>nvim</span>-<span style=color:#a6e22e>lspconfig</span><span style=color:#e6db74>/blob/</span><span style=color:#a6e22e>master</span>/<span style=color:#a6e22e>CONFIG</span>.<span style=color:#a6e22e>md</span>#<span style=color:#a6e22e>rust_analyzer</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    <span style=color:#a6e22e>server</span> = {}, -- <span style=color:#a6e22e>rust</span>-<span style=color:#a6e22e>analyer</span> <span style=color:#a6e22e>options</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>}<span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>-- <span style=color:#a6e22e>Enable</span> <span style=color:#a6e22e>diagnostics</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>handlers</span>[<span style=color:#e6db74>&#34;textDocument/publishDiagnostics&#34;</span>] = <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>with</span>(<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>  <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>diagnostic</span>.<span style=color:#a6e22e>on_publish_diagnostics</span>, {<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>    <span style=color:#a6e22e>virtual_text</span> = <span style=color:#a6e22e>true</span>,<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>    <span style=color:#a6e22e>signs</span> = <span style=color:#a6e22e>true</span>,<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>    <span style=color:#a6e22e>update_in_insert</span> = <span style=color:#a6e22e>true</span>,<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>  }<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>)<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;rust-tools&#39;</span>).<span style=color:#a6e22e>setup</span>(<span style=color:#a6e22e>opts</span>)<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>EOF</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
+</span><span style=color:#75715e>&#34; Setup Completion</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; See https://github.com/hrsh7th/nvim-cmp#basic-configuration</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>lua</span> &lt;&lt;<span style=color:#a6e22e>EOF</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>local</span> <span style=color:#a6e22e>cmp</span> = <span style=color:#a6e22e>require</span><span style=color:#e6db74>&#39;cmp&#39;</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>cmp</span>.<span style=color:#a6e22e>setup</span>({<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>  -- <span style=color:#a6e22e>Enable</span> <span style=color:#a6e22e>LSP</span> <span style=color:#a6e22e>snippets</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>  <span style=color:#a6e22e>snippet</span> = {<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    <span style=color:#a6e22e>expand</span> = <span style=color:#66d9ef>function</span>(<span style=color:#a6e22e>args</span>)<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>        <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>fn</span>[<span style=color:#e6db74>&#34;vsnip#anonymous&#34;</span>](<span style=color:#a6e22e>args</span>.<span style=color:#a6e22e>body</span>)<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    <span style=color:#a6e22e>end</span>,<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>  },<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>  <span style=color:#a6e22e>mapping</span> = {<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    [<span style=color:#e6db74>&#39;&lt;C-p&gt;&#39;</span>] = <span style=color:#a6e22e>cmp</span>.<span style=color:#a6e22e>mapping</span>.<span style=color:#a6e22e>select_prev_item</span>(),<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    [<span style=color:#e6db74>&#39;&lt;C-n&gt;&#39;</span>] = <span style=color:#a6e22e>cmp</span>.<span style=color:#a6e22e>mapping</span>.<span style=color:#a6e22e>select_next_item</span>(),<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    -- <span style=color:#a6e22e>Add</span> <span style=color:#a6e22e>tab</span> <span style=color:#a6e22e>support</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    [<span style=color:#e6db74>&#39;&lt;S-Tab&gt;&#39;</span>] = <span style=color:#a6e22e>cmp</span>.<span style=color:#a6e22e>mapping</span>.<span style=color:#a6e22e>select_prev_item</span>(),<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    [<span style=color:#e6db74>&#39;&lt;Tab&gt;&#39;</span>] = <span style=color:#a6e22e>cmp</span>.<span style=color:#a6e22e>mapping</span>.<span style=color:#a6e22e>select_next_item</span>(),<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    [<span style=color:#e6db74>&#39;&lt;C-d&gt;&#39;</span>] = <span style=color:#a6e22e>cmp</span>.<span style=color:#a6e22e>mapping</span>.<span style=color:#a6e22e>scroll_docs</span>(<span style=color:#ae81ff>-4</span>),<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    [<span style=color:#e6db74>&#39;&lt;C-f&gt;&#39;</span>] = <span style=color:#a6e22e>cmp</span>.<span style=color:#a6e22e>mapping</span>.<span style=color:#a6e22e>scroll_docs</span>(<span style=color:#ae81ff>4</span>),<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    [<span style=color:#e6db74>&#39;&lt;C-Space&gt;&#39;</span>] = <span style=color:#a6e22e>cmp</span>.<span style=color:#a6e22e>mapping</span>.<span style=color:#a6e22e>complete</span>(),<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    [<span style=color:#e6db74>&#39;&lt;C-e&gt;&#39;</span>] = <span style=color:#a6e22e>cmp</span>.<span style=color:#a6e22e>mapping</span>.<span style=color:#a6e22e>close</span>(),<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    [<span style=color:#e6db74>&#39;&lt;CR&gt;&#39;</span>] = <span style=color:#a6e22e>cmp</span>.<span style=color:#a6e22e>mapping</span>.<span style=color:#a6e22e>confirm</span>({<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>      <span style=color:#a6e22e>behavior</span> = <span style=color:#a6e22e>cmp</span>.<span style=color:#a6e22e>ConfirmBehavior</span>.<span style=color:#a6e22e>Insert</span>,<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>      <span style=color:#a6e22e>select</span> = <span style=color:#a6e22e>true</span>,<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    })<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>  },<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>  -- <span style=color:#a6e22e>Installed</span> <span style=color:#a6e22e>sources</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>  <span style=color:#a6e22e>sources</span> = {<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    { <span style=color:#a6e22e>name</span> = <span style=color:#e6db74>&#39;nvim_lsp&#39;</span> },<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    { <span style=color:#a6e22e>name</span> = <span style=color:#e6db74>&#39;vsnip&#39;</span> },<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    { <span style=color:#a6e22e>name</span> = <span style=color:#e6db74>&#39;path&#39;</span> },<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    { <span style=color:#a6e22e>name</span> = <span style=color:#e6db74>&#39;buffer&#39;</span> },<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>  },<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>})<span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>EOF</span><span style=color:#960050;background-color:#1e0010>
 </span></code></pre></div><p>Now when nvim is restarted, you should be able to autocomplete and view warnings
-and errors inside the editor! You&rsquo;ll notice, however, that the completion experience
-is not like what you might be use to in VSCode or other editors.
-Mostly surrounding the lack of <code>&lt;Tab></code> completion to navigate the menu. Vim uses <code>&lt;C-N></code>!</p><p><img src=/neovim-rust/tab_complete_fail.gif alt="gif of tab not working" title="Tab Completion Fail"></p><p><code>&lt;Tab></code> completion can be accomplished with the following</p><p>(Found in <code>:help completion</code>)</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vim data-lang=vim><span style=color:#75715e>&#34; Use &lt;Tab&gt; and &lt;S-Tab&gt; to navigate through popup menu</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>inoremap</span> &lt;<span style=color:#a6e22e>expr</span>&gt; &lt;<span style=color:#a6e22e>Tab</span>&gt;   <span style=color:#a6e22e>pumvisible</span>() ? <span style=color:#e6db74>&#34;\&lt;C-n&gt;&#34;</span> : <span style=color:#e6db74>&#34;\&lt;Tab&gt;&#34;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>inoremap</span> &lt;<span style=color:#a6e22e>expr</span>&gt; &lt;<span style=color:#a6e22e>S</span>-<span style=color:#a6e22e>Tab</span>&gt; <span style=color:#a6e22e>pumvisible</span>() ? <span style=color:#e6db74>&#34;\&lt;C-p&gt;&#34;</span> : <span style=color:#e6db74>&#34;\&lt;S-Tab&gt;&#34;</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
-</span><span style=color:#75715e>&#34; use &lt;Tab&gt; as trigger keys</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>imap</span> &lt;<span style=color:#a6e22e>Tab</span>&gt; &lt;<span style=color:#a6e22e>Plug</span>&gt;(<span style=color:#a6e22e>completion_smart_tab</span>)<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>imap</span> &lt;<span style=color:#a6e22e>S</span>-<span style=color:#a6e22e>Tab</span>&gt; &lt;<span style=color:#a6e22e>Plug</span>&gt;(<span style=color:#a6e22e>completion_smart_s_tab</span>)<span style=color:#960050;background-color:#1e0010>
-</span></code></pre></div><p><img src=/neovim-rust/tab_complete_works.gif alt="gif of tab working" title="Tab Completion Working"></p><p>What about code navigation? (<code>:help lsp</code>)</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vim data-lang=vim><span style=color:#75715e>&#34; Code navigation shortcuts</span><span style=color:#960050;background-color:#1e0010>
+and errors inside the editor!</p>
+<p><img src=/neovim-rust/completion.gif alt="gif of completionm" title=Completion></p>
+<p>And inlay hints!</p>
+<p><img src=/neovim-rust/inlayhints.png alt="image of inlay hints" title="Inlay Hints"></p>
+<p>What about code navigation? (<code>:help lsp</code>)</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vim data-lang=vim><span style=color:#75715e>&#34; Code navigation shortcuts</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>nnoremap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; &lt;<span style=color:#a6e22e>c</span>-]&gt; &lt;<span style=color:#a6e22e>cmd</span>&gt;<span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>buf</span>.<span style=color:#a6e22e>definition</span>()&lt;<span style=color:#a6e22e>CR</span>&gt;<span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>nnoremap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; <span style=color:#a6e22e>K</span>     &lt;<span style=color:#a6e22e>cmd</span>&gt;<span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>buf</span>.<span style=color:#a6e22e>hover</span>()&lt;<span style=color:#a6e22e>CR</span>&gt;<span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>nnoremap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; <span style=color:#a6e22e>gD</span>    &lt;<span style=color:#a6e22e>cmd</span>&gt;<span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>buf</span>.<span style=color:#a6e22e>implementation</span>()&lt;<span style=color:#a6e22e>CR</span>&gt;<span style=color:#960050;background-color:#1e0010>
@@ -93,9 +239,13 @@ Mostly surrounding the lack of <code>&lt;Tab></code> completion to navigate the 
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>nnoremap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; <span style=color:#a6e22e>gr</span>    &lt;<span style=color:#a6e22e>cmd</span>&gt;<span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>buf</span>.<span style=color:#a6e22e>references</span>()&lt;<span style=color:#a6e22e>CR</span>&gt;<span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>nnoremap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; <span style=color:#a6e22e>g0</span>    &lt;<span style=color:#a6e22e>cmd</span>&gt;<span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>buf</span>.<span style=color:#a6e22e>document_symbol</span>()&lt;<span style=color:#a6e22e>CR</span>&gt;<span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>nnoremap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; <span style=color:#a6e22e>gW</span>    &lt;<span style=color:#a6e22e>cmd</span>&gt;<span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>buf</span>.<span style=color:#a6e22e>workspace_symbol</span>()&lt;<span style=color:#a6e22e>CR</span>&gt;<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>nnoremap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; <span style=color:#a6e22e>gd</span>    &lt;<span style=color:#a6e22e>cmd</span>&gt;<span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>buf</span>.<span style=color:#a6e22e>declaration</span>()&lt;<span style=color:#a6e22e>CR</span>&gt;<span style=color:#960050;background-color:#1e0010>
-</span></code></pre></div><p><img src=/neovim-rust/code_nav.gif alt="gif of code navigation" title="Code Navigation"></p><p>Code actions are also very useful.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vim data-lang=vim><span style=color:#a6e22e>nnoremap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; <span style=color:#a6e22e>ga</span>    &lt;<span style=color:#a6e22e>cmd</span>&gt;<span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>buf</span>.<span style=color:#a6e22e>code_action</span>()&lt;<span style=color:#a6e22e>CR</span>&gt;<span style=color:#960050;background-color:#1e0010>
-</span></code></pre></div><p><img src=/neovim-rust/code_action.gif alt="gif of code actions" title="Code Action"></p><p>Let&rsquo;s improve the diagnostics experience.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vim data-lang=vim><span style=color:#75715e>&#34; Set updatetime for CursorHold</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>nnoremap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; <span style=color:#a6e22e>gd</span>    &lt;<span style=color:#a6e22e>cmd</span>&gt;<span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>buf</span>.<span style=color:#a6e22e>definition</span>()&lt;<span style=color:#a6e22e>CR</span>&gt;<span style=color:#960050;background-color:#1e0010>
+</span></code></pre></div><p><img src=/neovim-rust/code_nav.gif alt="gif of code navigation" title="Code Navigation"></p>
+<p>Code actions are also very useful.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vim data-lang=vim><span style=color:#a6e22e>nnoremap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; <span style=color:#a6e22e>ga</span>    &lt;<span style=color:#a6e22e>cmd</span>&gt;<span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>buf</span>.<span style=color:#a6e22e>code_action</span>()&lt;<span style=color:#a6e22e>CR</span>&gt;<span style=color:#960050;background-color:#1e0010>
+</span></code></pre></div><p><img src=/neovim-rust/code_action.gif alt="gif of code actions" title="Code Action"></p>
+<p>Let&rsquo;s improve the diagnostics experience.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vim data-lang=vim><span style=color:#75715e>&#34; Set updatetime for CursorHold</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; 300ms of no cursor movement to trigger CursorHold</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>updatetime</span>=<span style=color:#ae81ff>300</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; Show diagnostic popup on cursor hold</span><span style=color:#960050;background-color:#1e0010>
@@ -104,16 +254,43 @@ Mostly surrounding the lack of <code>&lt;Tab></code> completion to navigate the 
 </span><span style=color:#75715e>&#34; Goto previous/next diagnostic warning/error</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>nnoremap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; <span style=color:#a6e22e>g</span>[ &lt;<span style=color:#a6e22e>cmd</span>&gt;<span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>diagnostic</span>.<span style=color:#a6e22e>goto_prev</span>()&lt;<span style=color:#a6e22e>CR</span>&gt;<span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>nnoremap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; <span style=color:#a6e22e>g</span>] &lt;<span style=color:#a6e22e>cmd</span>&gt;<span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>diagnostic</span>.<span style=color:#a6e22e>goto_next</span>()&lt;<span style=color:#a6e22e>CR</span>&gt;<span style=color:#960050;background-color:#1e0010>
-</span></code></pre></div><p><img src=/neovim-rust/diagnostic.gif alt="gif of diagnostics" title=Diagnostics></p><p>You may notice, there&rsquo;s a slight vertical jitter when a new diagnostic comes in.</p><p>To avoid this, you can set <code>signcolumn</code></p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#e6db74>&#34; have a fixed column for the diagnostics to appear in
+</span></code></pre></div><p><img src=/neovim-rust/diagnostic.gif alt="gif of diagnostics" title=Diagnostics></p>
+<p>You may notice, there&rsquo;s a slight vertical jitter when a new diagnostic comes in.</p>
+<p>To avoid this, you can set <code>signcolumn</code></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#e6db74>&#34; have a fixed column for the diagnostics to appear in
 </span><span style=color:#e6db74>&#34;</span> this removes the jitter when warnings<span style=color:#f92672>/</span>errors flow <span style=color:#66d9ef>in</span>
 set signcolumn<span style=color:#f92672>=</span>yes
-</code></pre></div><p>And to cap it off, let&rsquo;s enable inlay hints!</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vim data-lang=vim><span style=color:#75715e>&#34; Enable type inlay hints</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>autocmd</span> <span style=color:#a6e22e>CursorMoved</span>,<span style=color:#a6e22e>InsertLeave</span>,<span style=color:#a6e22e>BufEnter</span>,<span style=color:#a6e22e>BufWinEnter</span>,<span style=color:#a6e22e>TabEnter</span>,<span style=color:#a6e22e>BufWritePost</span> *<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>\ <span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>require</span><span style=color:#e6db74>&#39;lsp_extensions&#39;</span>.<span style=color:#a6e22e>inlay_hints</span>{ <span style=color:#a6e22e>prefix</span> = <span style=color:#e6db74>&#39;&#39;</span>, <span style=color:#a6e22e>highlight</span> = <span style=color:#e6db74>&#34;Comment&#34;</span>, <span style=color:#a6e22e>enabled</span> = {<span style=color:#e6db74>&#34;TypeHint&#34;</span>, <span style=color:#e6db74>&#34;ChainingHint&#34;</span>, <span style=color:#e6db74>&#34;ParameterHint&#34;</span>} }<span style=color:#960050;background-color:#1e0010>
-</span></code></pre></div><p><img src=/neovim-rust/inlayhints.png alt="image of inlay hints" title="Inlay Hints"></p><p>To conclude, this introduces a basic and flexible setup for Rust development.
+</code></pre></div><p>To conclude, this introduces a basic and flexible setup for Rust development.
 Here&rsquo;s the best part though, it&rsquo;s simple to configure
 <a href=https://github.com/neovim/nvim-lspconfig#configurations>more languages servers</a>!
 This setup allows you, the developer, to add more lsp'
-(just like we did with rust-analyzer) to have a full featured cross-language experience.</p><p>Thanks for reading!</p><p>Questions? Found an error? <a href=https://github.com/sharksforarms/sharksforarms.github.io/issues/new>Create an issue on Github!</a></p><p>Edits:</p><ul><li>2020-09-23: Added note about <code>signcolumn</code></li><li>2020-10-05: Added note about code actions and gif</li><li>2020-12-17: Updated diagnostics and lsp config to reflect latest neovim developments</li><li>2020-12-23: Updated tab completion config to reflect latest
-<a href=https://github.com/nvim-lua/completion-nvim/commit/5c153f8ae094867a414cb2a7c0f59454299f17b3>completion.nvim</a> developments</li><li>2021-02-02: Added <code>enabled</code> to <code>inlay_hints</code> function call to support more hints</li></ul></div></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2021 Powered by <a href=http://gohugo.io>Hugo</a></span>
-<span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span></div></div></footer><script src=/assets/main.js></script><script src=/assets/prism.js></script><script data-goatcounter=https://sharks.goatcounter.com/count async src=//gc.zgo.at/count.js></script></div></body></html>
+(just like we did with rust-analyzer) to have a full featured cross-language experience.</p>
+<p>Thanks for reading!</p>
+<p>Questions? Found an error? <a href=https://github.com/sharksforarms/sharksforarms.github.io/issues/new>Create an issue on Github!</a></p>
+<p>Edits:</p>
+<ul>
+<li>2021-09-01: Updated completion framework, enhanced LSP with rust-tools.nvim and more!</li>
+<li>2020-09-23: Added note about <code>signcolumn</code></li>
+<li>2020-10-05: Added note about code actions and gif</li>
+<li>2020-12-17: Updated diagnostics and lsp config to reflect latest neovim developments</li>
+<li>2020-12-23: Updated tab completion config to reflect latest
+<a href=https://github.com/nvim-lua/completion-nvim/commit/5c153f8ae094867a414cb2a7c0f59454299f17b3>completion.nvim</a> developments</li>
+<li>2021-02-02: Added <code>enabled</code> to <code>inlay_hints</code> function call to support more hints</li>
+</ul>
+</div></div>
+</div>
+</div>
+<footer class=footer>
+<div class=footer__inner>
+<div class=copyright>
+<span>© 2021 Powered by <a href=http://gohugo.io>Hugo</a></span>
+<span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span>
+</div>
+</div>
+</footer>
+<script src=/assets/main.js></script>
+<script src=/assets/prism.js></script>
+<script data-goatcounter=https://sharks.goatcounter.com/count async src=//gc.zgo.at/count.js></script>
+</div>
+</body>
+</html>
