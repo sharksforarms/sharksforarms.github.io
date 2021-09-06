@@ -96,6 +96,9 @@ Plug 'hrsh7th/cmp-buffer'
 " To enable more of the features of rust-analyzer, such as inlay hints and more!
 Plug 'simrat39/rust-tools.nvim'
 
+" Snippet engine
+Plug 'hrsh7th/vim-vsnip'
+
 " Fuzzy finder
 " Optional
 Plug 'nvim-lua/popup.nvim'
