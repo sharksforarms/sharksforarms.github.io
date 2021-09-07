@@ -275,7 +275,29 @@ Thanks for reading!
 
 Questions? Found an error? [Create an issue on Github!](https://github.com/sharksforarms/sharksforarms.github.io/issues/new)
 
+# What's Next?
+
+Here's some other great plugins to keep you going.
+
+## Better UI
+- [lspsaga](https://github.com/glepnir/lspsaga.nvim)
+
+## Fuzzy finding
+- [telescope](https://github.com/nvim-telescope/telescope.nvim)
+
+
+## Debugging
+- [nvim-dap](https://github.com/mfussenegger/nvim-dap)
+- [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui)
+
+Note: you may need to do the following
+```sh
+sudo apt install lldb-11
+sudo ln -s /usr/bin/lldb-vscode-11 /usr/bin/lldb-vscode
+```
+
 Edits:
+- 2021-09-06: Added "what next" section
 - 2021-09-06: Added rust-analyzer config example, enable clippy on save.
 - 2021-09-01: Updated completion framework, enhanced LSP with rust-tools.nvim and more!
 - 2020-09-23: Added note about `signcolumn`
