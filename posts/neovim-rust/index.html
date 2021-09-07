@@ -60,7 +60,7 @@ sharksforarms
 <a href=/posts/neovim-rust/>Neovim and Rust</a></h1>
 <div class=post-meta>
 <span class=post-date>
-2020-09-21 [Updated: 2021-09-05]
+2020-09-21 [Updated: 2021-09-06]
 </span>
 <span class=post-author>:: sharksforarms</span>
 </div>
@@ -185,7 +185,20 @@ but any plugin manager can be used.</p>
 </span><span style=color:#960050;background-color:#1e0010></span>    -- <span style=color:#a6e22e>all</span> <span style=color:#a6e22e>the</span> <span style=color:#a6e22e>opts</span> <span style=color:#a6e22e>to</span> <span style=color:#a6e22e>send</span> <span style=color:#a6e22e>to</span> <span style=color:#a6e22e>nvim</span>-<span style=color:#a6e22e>lspconfig</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span>    -- <span style=color:#a6e22e>these</span> <span style=color:#a6e22e>override</span> <span style=color:#a6e22e>the</span> <span style=color:#a6e22e>defaults</span> <span style=color:#a6e22e>set</span> <span style=color:#a6e22e>by</span> <span style=color:#a6e22e>rust</span>-<span style=color:#a6e22e>tools</span>.<span style=color:#a6e22e>nvim</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span>    -- <span style=color:#a6e22e>see</span> <span style=color:#a6e22e>https</span>:<span style=color:#e6db74>//</span><span style=color:#a6e22e>github</span>.<span style=color:#a6e22e>com</span><span style=color:#e6db74>/neovim/</span><span style=color:#a6e22e>nvim</span>-<span style=color:#a6e22e>lspconfig</span><span style=color:#e6db74>/blob/</span><span style=color:#a6e22e>master</span>/<span style=color:#a6e22e>CONFIG</span>.<span style=color:#a6e22e>md</span>#<span style=color:#a6e22e>rust_analyzer</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span>    <span style=color:#a6e22e>server</span> = {}, -- <span style=color:#a6e22e>rust</span>-<span style=color:#a6e22e>analyer</span> <span style=color:#a6e22e>options</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    <span style=color:#a6e22e>server</span> = {<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>        -- <span style=color:#a6e22e>on_attach</span> <span style=color:#a6e22e>is</span> <span style=color:#a6e22e>a</span> <span style=color:#a6e22e>callback</span> <span style=color:#a6e22e>called</span> <span style=color:#a6e22e>when</span> <span style=color:#a6e22e>the</span> <span style=color:#a6e22e>language</span> <span style=color:#a6e22e>server</span> <span style=color:#a6e22e>attachs</span> <span style=color:#a6e22e>to</span> <span style=color:#a6e22e>the</span> <span style=color:#a6e22e>buffer</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>        -- <span style=color:#a6e22e>on_attach</span> = <span style=color:#a6e22e>on_attach</span>,<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>        <span style=color:#a6e22e>settings</span> = {<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>            -- <span style=color:#a6e22e>to</span> <span style=color:#a6e22e>enable</span> <span style=color:#a6e22e>rust</span>-<span style=color:#a6e22e>analyzer</span> <span style=color:#a6e22e>settings</span> <span style=color:#a6e22e>visit</span>:<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>            -- <span style=color:#a6e22e>https</span>:<span style=color:#e6db74>//</span><span style=color:#a6e22e>github</span>.<span style=color:#a6e22e>com</span><span style=color:#e6db74>/rust-analyzer/</span><span style=color:#a6e22e>rust</span>-<span style=color:#a6e22e>analyzer</span><span style=color:#e6db74>/blob/</span><span style=color:#a6e22e>master</span><span style=color:#e6db74>/docs/</span><span style=color:#a6e22e>user</span>/<span style=color:#a6e22e>generated_config</span>.<span style=color:#a6e22e>adoc</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>            [<span style=color:#e6db74>&#34;rust-analyzer&#34;</span>] = {<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>                -- <span style=color:#a6e22e>enable</span> <span style=color:#a6e22e>clippy</span> <span style=color:#a6e22e>on</span> <span style=color:#a6e22e>save</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>                <span style=color:#a6e22e>checkonsave</span> = {<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>                    <span style=color:#a6e22e>command</span> = <span style=color:#e6db74>&#34;clippy&#34;</span><span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>                },<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>            }<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>        }<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span>    },<span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span>}<span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;rust-tools&#39;</span>).<span style=color:#a6e22e>setup</span>(<span style=color:#a6e22e>opts</span>)<span style=color:#960050;background-color:#1e0010>
@@ -270,8 +283,28 @@ This setup allows you, the developer, to add more lsp'
 (just like we did with rust-analyzer) to have a full featured cross-language experience.</p>
 <p>Thanks for reading!</p>
 <p>Questions? Found an error? <a href=https://github.com/sharksforarms/sharksforarms.github.io/issues/new>Create an issue on Github!</a></p>
-<p>Edits:</p>
+<h1 id=whats-next>What&rsquo;s Next?<a href=#whats-next class=hanchor arialabel=Anchor>&#8983;</a> </h1>
+<p>Here&rsquo;s some other great plugins to keep you going.</p>
+<h2 id=better-ui>Better UI<a href=#better-ui class=hanchor arialabel=Anchor>&#8983;</a> </h2>
 <ul>
+<li><a href=https://github.com/glepnir/lspsaga.nvim>lspsaga</a></li>
+</ul>
+<h2 id=fuzzy-finding>Fuzzy finding<a href=#fuzzy-finding class=hanchor arialabel=Anchor>&#8983;</a> </h2>
+<ul>
+<li><a href=https://github.com/nvim-telescope/telescope.nvim>telescope</a></li>
+</ul>
+<h2 id=debugging>Debugging<a href=#debugging class=hanchor arialabel=Anchor>&#8983;</a> </h2>
+<ul>
+<li><a href=https://github.com/mfussenegger/nvim-dap>nvim-dap</a></li>
+<li><a href=https://github.com/rcarriga/nvim-dap-ui>nvim-dap-ui</a></li>
+</ul>
+<p>Note: you may need to do the following</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>sudo apt install lldb-11
+sudo ln -s /usr/bin/lldb-vscode-11 /usr/bin/lldb-vscode
+</code></pre></div><p>Edits:</p>
+<ul>
+<li>2021-09-06: Added &ldquo;what next&rdquo; section</li>
+<li>2021-09-06: Added rust-analyzer config example, enable clippy on save.</li>
 <li>2021-09-01: Updated completion framework, enhanced LSP with rust-tools.nvim and more!</li>
 <li>2020-09-23: Added note about <code>signcolumn</code></li>
 <li>2020-10-05: Added note about code actions and gif</li>
