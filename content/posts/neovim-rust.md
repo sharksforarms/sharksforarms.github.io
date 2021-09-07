@@ -280,7 +280,7 @@ Here's some other great plugins to keep you going.
 - [nvim-dap](https://github.com/mfussenegger/nvim-dap)
 - [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui)
 
-Note: you may need to do the following
+Note: you may need to do the following to make debugging work.
 ```sh
 sudo apt install lldb-11
 sudo ln -s /usr/bin/lldb-vscode-11 /usr/bin/lldb-vscode
