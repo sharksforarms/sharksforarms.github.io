@@ -265,6 +265,27 @@ To avoid this, you can set `signcolumn`
 set signcolumn=yes
 ```
 
+# What's Next?
+
+Here's some other great plugins to keep you going.
+
+**Better UI**
+- [lspsaga](https://github.com/glepnir/lspsaga.nvim)
+
+**Fuzzy finding**
+- [telescope](https://github.com/nvim-telescope/telescope.nvim)
+
+
+**Debugging**
+- [nvim-dap](https://github.com/mfussenegger/nvim-dap)
+- [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui)
+
+Note: you may need to do the following
+```sh
+sudo apt install lldb-11
+sudo ln -s /usr/bin/lldb-vscode-11 /usr/bin/lldb-vscode
+```
+
 To conclude, this introduces a basic and flexible setup for Rust development.
 Here's the best part though, it's simple to configure
 [more languages servers](https://github.com/neovim/nvim-lspconfig#configurations)!
@@ -274,27 +295,6 @@ This setup allows you, the developer, to add more lsp'
 Thanks for reading!
 
 Questions? Found an error? [Create an issue on Github!](https://github.com/sharksforarms/sharksforarms.github.io/issues/new)
-
-# What's Next?
-
-Here's some other great plugins to keep you going.
-
-## Better UI
-- [lspsaga](https://github.com/glepnir/lspsaga.nvim)
-
-## Fuzzy finding
-- [telescope](https://github.com/nvim-telescope/telescope.nvim)
-
-
-## Debugging
-- [nvim-dap](https://github.com/mfussenegger/nvim-dap)
-- [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui)
-
-Note: you may need to do the following
-```sh
-sudo apt install lldb-11
-sudo ln -s /usr/bin/lldb-vscode-11 /usr/bin/lldb-vscode
-```
 
 Edits:
 - 2021-09-06: Added "what next" section
