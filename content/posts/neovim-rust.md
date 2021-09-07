@@ -300,9 +300,9 @@ Edits:
 - 2021-09-06: Added "what next" section
 - 2021-09-06: Added rust-analyzer config example, enable clippy on save.
 - 2021-09-01: Updated completion framework, enhanced LSP with rust-tools.nvim and more!
-- 2020-09-23: Added note about `signcolumn`
-- 2020-10-05: Added note about code actions and gif
-- 2020-12-17: Updated diagnostics and lsp config to reflect latest neovim developments
+- 2021-02-02: Added `enabled` to `inlay_hints` function call to support more hints
 - 2020-12-23: Updated tab completion config to reflect latest
 [completion.nvim](https://github.com/nvim-lua/completion-nvim/commit/5c153f8ae094867a414cb2a7c0f59454299f17b3) developments
-- 2021-02-02: Added `enabled` to `inlay_hints` function call to support more hints
+- 2020-12-17: Updated diagnostics and lsp config to reflect latest neovim developments
+- 2020-10-05: Added note about code actions and gif
+- 2020-09-23: Added note about `signcolumn`
