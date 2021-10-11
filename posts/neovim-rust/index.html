@@ -60,7 +60,7 @@ sharksforarms
 <a href=/posts/neovim-rust/>Neovim and Rust</a></h1>
 <div class=post-meta>
 <span class=post-date>
-2020-09-21 [Updated: 2021-09-06]
+2020-09-21 [Updated: 2021-10-11]
 </span>
 <span class=post-author>:: sharksforarms</span>
 </div>
@@ -84,7 +84,7 @@ I&rsquo;d like to share today.</p>
 <p><a href=https://neovim.io/>Neovim</a> is a fork of vim, which is focused on extensibility
 and usability. An example of this is the ability to use Lua instead of VimL for
 plugins providing greater flexibility for extending the editor.</p>
-<p>In the 0.5 release of Neovim (currently nightly), the developers have introduced
+<p>In the 0.5 release of Neovim, the developers have introduced
 an <a href=https://microsoft.github.io/language-server-protocol/>Language Server Protocol</a>
 (LSP) client framework (<code>:help lsp</code>)</p>
 <p>This means, Neovim can act as a client to LSP servers (like rust-analyzer) and
@@ -105,9 +105,9 @@ servers available for almost every language out there.</p>
 <li>Neovim >= 0.5, see <a href=https://github.com/neovim/neovim/wiki/Installing-Neovim>Installing Neovim</a>
 <ul>
 <li>Currently, 0.5 can be found as a
-<a href=https://github.com/neovim/neovim/releases/nightly>nightly download</a>,
+<a href=https://github.com/neovim/neovim/releases>github download</a>,
 in the <a href=https://github.com/neovim/neovim/wiki/Installing-Neovim#ubuntu>unstable PPA</a>
-or other nightly sources. I am currently living on the bleeding edge: <a href=https://github.com/neovim/neovim#install-from-source>building
+or other repositories. I am currently living on the bleeding edge (0.6): <a href=https://github.com/neovim/neovim#install-from-source>building
 and installing neovim from the master git branch</a>.</li>
 </ul>
 </li>
@@ -278,6 +278,11 @@ and errors inside the editor!</p>
 set signcolumn<span style=color:#f92672>=</span>yes
 </code></pre></div><h1 id=whats-next>What&rsquo;s Next?<a href=#whats-next class=hanchor arialabel=Anchor>&#8983;</a> </h1>
 <p>Here&rsquo;s some other great plugins to keep you going.</p>
+<p><strong>Neovim LSP</strong></p>
+<p>The built in neovim LSP combined with neovim features can be very powerful.</p>
+<p>Here&rsquo;s an example of &ldquo;format-on-write&rdquo; (with a timeout of 200ms)</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-vim data-lang=vim><span style=color:#a6e22e>autocmd</span> <span style=color:#a6e22e>BufWritePre</span> *.<span style=color:#a6e22e>rs</span> <span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>buf</span>.<span style=color:#a6e22e>formatting_sync</span>(<span style=color:#a6e22e>nil</span>, <span style=color:#ae81ff>200</span>)<span style=color:#960050;background-color:#1e0010>
+</span></code></pre></div><p>Check out <code>:help lsp</code> for more information!</p>
 <p><strong>Better UI</strong></p>
 <ul>
 <li><a href=https://github.com/glepnir/lspsaga.nvim>lspsaga</a></li>
@@ -303,6 +308,7 @@ This setup allows you, the developer, to add more lsp'
 <p>Questions? Found an error? <a href=https://github.com/sharksforarms/sharksforarms.github.io/issues/new>Create an issue on Github!</a></p>
 <p>Edits:</p>
 <ul>
+<li>2021-10-11: Removed references to nightly and added formatting example</li>
 <li>2021-09-06: Added &ldquo;what next&rdquo; section</li>
 <li>2021-09-06: Added rust-analyzer config example, enable clippy on save.</li>
 <li>2021-09-01: Updated completion framework, enhanced LSP with rust-tools.nvim and more!</li>
