@@ -33,7 +33,7 @@ I'd like to share today.
 and usability. An example of this is the ability to use Lua instead of VimL for
 plugins providing greater flexibility for extending the editor.
 
-In the 0.5 release of Neovim (currently nightly), the developers have introduced
+In the 0.5 release of Neovim, the developers have introduced
 an [Language Server Protocol](https://microsoft.github.io/language-server-protocol/)
 (LSP) client framework (`:help lsp`)
 
@@ -60,9 +60,9 @@ https://github.com/sharksforarms/vim-rust
 Let's start with the prerequisites:
 - Neovim >= 0.5, see [Installing Neovim](https://github.com/neovim/neovim/wiki/Installing-Neovim)
   - Currently, 0.5 can be found as a
-  [nightly download](https://github.com/neovim/neovim/releases/nightly),
+  [github download](https://github.com/neovim/neovim/releases),
   in the [unstable PPA](https://github.com/neovim/neovim/wiki/Installing-Neovim#ubuntu)
-  or other nightly sources. I am currently living on the bleeding edge: [building
+  or other repositories. I am currently living on the bleeding edge (0.6): [building
   and installing neovim from the master git branch](https://github.com/neovim/neovim#install-from-source).
 - [Install rust-analyzer](https://rust-analyzer.github.io/manual.html#rust-analyzer-language-server-binary)
 Note: The binary must be in your `PATH`
@@ -269,6 +269,18 @@ set signcolumn=yes
 
 Here's some other great plugins to keep you going.
 
+**Neovim LSP**
+
+The built in neovim LSP combined with neovim features can be very powerful.
+
+Here's an example of "format-on-write" (with a timeout of 200ms)
+
+```vim
+autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 200)
+```
+
+Check out `:help lsp` for more information!
+
 **Better UI**
 - [lspsaga](https://github.com/glepnir/lspsaga.nvim)
 
@@ -297,6 +309,7 @@ Thanks for reading!
 Questions? Found an error? [Create an issue on Github!](https://github.com/sharksforarms/sharksforarms.github.io/issues/new)
 
 Edits:
+- 2021-10-11: Removed references to nightly and added formatting example
 - 2021-09-06: Added "what next" section
 - 2021-09-06: Added rust-analyzer config example, enable clippy on save.
 - 2021-09-01: Updated completion framework, enhanced LSP with rust-tools.nvim and more!
