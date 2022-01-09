@@ -60,7 +60,7 @@ sharksforarms
 <a href=/posts/neovim-rust/>Neovim and Rust</a></h1>
 <div class=post-meta>
 <span class=post-date>
-2020-09-21 [Updated: 2021-12-21]
+2020-09-21 [Updated: 2022-01-09]
 </span>
 <span class=post-author>:: sharksforarms</span>
 </div>
@@ -265,7 +265,7 @@ and errors inside the editor!</p>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; 300ms of no cursor movement to trigger CursorHold</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>set</span> <span style=color:#a6e22e>updatetime</span>=<span style=color:#ae81ff>300</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>&#34; Show diagnostic popup on cursor hold</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>autocmd</span> <span style=color:#a6e22e>CursorHold</span> * <span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>diagnostic</span>.<span style=color:#a6e22e>show_line_diagnostics</span>()<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>autocmd</span> <span style=color:#a6e22e>CursorHold</span> * <span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>diagnostic</span>.<span style=color:#a6e22e>open_float</span>(<span style=color:#a6e22e>nil</span>, { <span style=color:#a6e22e>focusable</span> = <span style=color:#a6e22e>false</span> })<span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
 </span><span style=color:#75715e>&#34; Goto previous/next diagnostic warning/error</span><span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>nnoremap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; <span style=color:#a6e22e>g</span>[ &lt;<span style=color:#a6e22e>cmd</span>&gt;<span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>diagnostic</span>.<span style=color:#a6e22e>goto_prev</span>()&lt;<span style=color:#a6e22e>CR</span>&gt;<span style=color:#960050;background-color:#1e0010>
@@ -308,6 +308,7 @@ This setup allows you, the developer, to add more lsp'
 <p>Questions? Found an error? <a href=https://github.com/sharksforarms/sharksforarms.github.io/issues/new>Create an issue on Github!</a></p>
 <p>Edits:</p>
 <ul>
+<li>2022-01-09: Use <code>vim.diagnostic.open_float</code> instead of <code>vim.lsp.diagnostic.show_line_diagnostics</code> See <a href=https://github.com/neovim/neovim/issues/15154>neovim/neovim#15154</a></li>
 <li>2021-10-11: Removed references to nightly and added formatting example</li>
 <li>2021-09-06: Added &ldquo;what next&rdquo; section</li>
 <li>2021-09-06: Added rust-analyzer config example, enable clippy on save.</li>
@@ -325,7 +326,7 @@ This setup allows you, the developer, to add more lsp'
 <footer class=footer>
 <div class=footer__inner>
 <div class=copyright>
-<span>© 2021 Powered by <a href=http://gohugo.io>Hugo</a></span>
+<span>© 2022 Powered by <a href=http://gohugo.io>Hugo</a></span>
 <span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span>
 </div>
 </div>
