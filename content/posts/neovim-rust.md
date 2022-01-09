@@ -246,7 +246,7 @@ Let's improve the diagnostics experience.
 " 300ms of no cursor movement to trigger CursorHold
 set updatetime=300
 " Show diagnostic popup on cursor hold
-autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
+autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
 
 " Goto previous/next diagnostic warning/error
 nnoremap <silent> g[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
@@ -309,6 +309,7 @@ Thanks for reading!
 Questions? Found an error? [Create an issue on Github!](https://github.com/sharksforarms/sharksforarms.github.io/issues/new)
 
 Edits:
+- 2022-01-09: Use `vim.diagnostic.open_float` instead of `vim.lsp.diagnostic.show_line_diagnostics` See [neovim/neovim#15154](https://github.com/neovim/neovim/issues/15154)
 - 2021-10-11: Removed references to nightly and added formatting example
 - 2021-09-06: Added "what next" section
 - 2021-09-06: Added rust-analyzer config example, enable clippy on save.
