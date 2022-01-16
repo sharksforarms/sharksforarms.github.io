@@ -60,7 +60,7 @@ sharksforarms
 <a href=/posts/neovim-rust/>Neovim and Rust</a></h1>
 <div class=post-meta>
 <span class=post-date>
-2020-09-21 [Updated: 2022-01-09]
+2020-09-21 [Updated: 2022-01-16]
 </span>
 <span class=post-author>:: sharksforarms</span>
 </div>
@@ -268,8 +268,8 @@ and errors inside the editor!</p>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>autocmd</span> <span style=color:#a6e22e>CursorHold</span> * <span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>diagnostic</span>.<span style=color:#a6e22e>open_float</span>(<span style=color:#a6e22e>nil</span>, { <span style=color:#a6e22e>focusable</span> = <span style=color:#a6e22e>false</span> })<span style=color:#960050;background-color:#1e0010>
 </span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e>
 </span><span style=color:#75715e>&#34; Goto previous/next diagnostic warning/error</span><span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>nnoremap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; <span style=color:#a6e22e>g</span>[ &lt;<span style=color:#a6e22e>cmd</span>&gt;<span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>diagnostic</span>.<span style=color:#a6e22e>goto_prev</span>()&lt;<span style=color:#a6e22e>CR</span>&gt;<span style=color:#960050;background-color:#1e0010>
-</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>nnoremap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; <span style=color:#a6e22e>g</span>] &lt;<span style=color:#a6e22e>cmd</span>&gt;<span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>lsp</span>.<span style=color:#a6e22e>diagnostic</span>.<span style=color:#a6e22e>goto_next</span>()&lt;<span style=color:#a6e22e>CR</span>&gt;<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>nnoremap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; <span style=color:#a6e22e>g</span>[ &lt;<span style=color:#a6e22e>cmd</span>&gt;<span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>diagnostic</span>.<span style=color:#a6e22e>goto_prev</span>()&lt;<span style=color:#a6e22e>CR</span>&gt;<span style=color:#960050;background-color:#1e0010>
+</span><span style=color:#960050;background-color:#1e0010></span><span style=color:#a6e22e>nnoremap</span> &lt;<span style=color:#a6e22e>silent</span>&gt; <span style=color:#a6e22e>g</span>] &lt;<span style=color:#a6e22e>cmd</span>&gt;<span style=color:#a6e22e>lua</span> <span style=color:#a6e22e>vim</span>.<span style=color:#a6e22e>diagnostic</span>.<span style=color:#a6e22e>goto_next</span>()&lt;<span style=color:#a6e22e>CR</span>&gt;<span style=color:#960050;background-color:#1e0010>
 </span></code></pre></div><p><img src=/neovim-rust/diagnostic.gif alt="gif of diagnostics" title=Diagnostics></p>
 <p>You may notice, there&rsquo;s a slight vertical jitter when a new diagnostic comes in.</p>
 <p>To avoid this, you can set <code>signcolumn</code></p>
