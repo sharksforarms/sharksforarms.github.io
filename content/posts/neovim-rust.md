@@ -132,6 +132,11 @@ set shortmess+=c
 lua <<EOF
 local nvim_lsp = require'lspconfig'
 
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+require('lspconfig')['rust_analyzer'].setup {
+  capabilities = capabilities
+}
+
 local opts = {
     tools = { -- rust-tools options
         autoSetHints = true,
