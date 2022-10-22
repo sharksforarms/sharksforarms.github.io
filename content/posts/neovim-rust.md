@@ -120,7 +120,7 @@ Let's setup the rust-analyzer LSP and start configuring the completion
 " :help completeopt
 " menuone: popup even when there's only one match
 " noinsert: Do not insert text until a selection is made
-" noselect: Do not select, force user to select one from the menu
+" noselect: Do not auto-select, nvim-cmp plugin will handle this for us.
 set completeopt=menuone,noinsert,noselect
 
 " Avoid showing extra messages when using completion
