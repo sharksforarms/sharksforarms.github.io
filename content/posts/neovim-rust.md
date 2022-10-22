@@ -12,9 +12,7 @@ showFullContent = false
 +++
 
 {{< rawhtml >}}
-<p align="center">
-  <img src="/neovim-rust/cover.png" />
-</p>
+<img class="center" src="/neovim-rust/cover.png" />
 {{< /rawhtml >}}
 
 I have used many editors in the last 5 years.
