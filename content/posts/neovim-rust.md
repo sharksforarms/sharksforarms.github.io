@@ -52,155 +52,182 @@ servers available for almost every language out there.
 
 **So how do we configure Neovim LSP with rust-analyzer? Simple!**
 
-Check out this repository for the complete configuration and more
+Check out this github repository for the complete, up-to date configuration.
 
-
-https://github.com/sharksforarms/vim-rust
+https://github.com/sharksforarms/neovim-rust
 
 Let's start with the prerequisites:
-- Neovim >= 0.5, see [Installing Neovim](https://github.com/neovim/neovim/wiki/Installing-Neovim)
-  - Currently, 0.5 can be found as a
+- Neovim >= 0.8, see [Installing Neovim](https://github.com/neovim/neovim/wiki/Installing-Neovim)
+  - Currently, 0.8 can be found as a
   [github download](https://github.com/neovim/neovim/releases),
   in the [unstable PPA](https://github.com/neovim/neovim/wiki/Installing-Neovim#ubuntu)
-  or other repositories. I am currently living on the bleeding edge (0.6): [building
+  or other repositories. I am currently living on the bleeding edge (0.9): [building
   and installing neovim from the master git branch](https://github.com/neovim/neovim#install-from-source).
 - [Install rust-analyzer](https://rust-analyzer.github.io/manual.html#rust-analyzer-language-server-binary)
-Note: The binary must be in your `PATH`
+
+Note: The binary must be in your environment's `PATH`
 
 Diving in, let's install some plugins.
 
-The plugin manager used here is [vim-plug](https://github.com/junegunn/vim-plug),
+The plugin manager used here is [packer.nvim](https://github.com/wbthomason/packer.nvim),
 but any plugin manager can be used.
 
-```vim
-call plug#begin('~/.vim/plugged')
+Let's start off with a fresh `~/.config/nvim/init.lua` file.
 
-" Collection of common configurations for the Nvim LSP client
-Plug 'neovim/nvim-lspconfig'
+```lua
+-- ensure the packer plugin manager is installed
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
+    vim.cmd([[packadd packer.nvim]])
+    return true
+  end
+  return false
+end
 
-" Completion framework
-Plug 'hrsh7th/nvim-cmp'
+local packer_bootstrap = ensure_packer()
 
-" LSP completion source for nvim-cmp
-Plug 'hrsh7th/cmp-nvim-lsp'
+require("packer").startup(function(use)
+  -- Packer can manage itself
+  use("wbthomason/packer.nvim")
+  -- Collection of common configurations for the Nvim LSP client
+  use("neovim/nvim-lspconfig")
+  -- Visualize lsp progress
+  use({
+    "j-hui/fidget.nvim",
+    config = function()
+      require("fidget").setup()
+    end
+  })
 
-" Snippet completion source for nvim-cmp
-Plug 'hrsh7th/cmp-vsnip'
+  -- Autocompletion framework
+  use("hrsh7th/nvim-cmp")
+  use({
+    -- cmp LSP completion
+    "hrsh7th/cmp-nvim-lsp",
+    -- cmp Snippet completion
+    "hrsh7th/cmp-vsnip",
+    -- cmp Path completion
+    "hrsh7th/cmp-path",
+    "hrsh7th/cmp-buffer",
+    after = { "hrsh7th/nvim-cmp" },
+    requires = { "hrsh7th/nvim-cmp" },
+  })
+  -- See hrsh7th other plugins for more great completion sources!
+  -- Snippet engine
+  use('hrsh7th/vim-vsnip')
+  -- Adds extra functionality over rust analyzer
+  use("simrat39/rust-tools.nvim")
 
-" Other usefull completion sources
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-buffer'
+  -- Optional
+  use("nvim-lua/popup.nvim")
+  use("nvim-lua/plenary.nvim")
+  use("nvim-telescope/telescope.nvim")
 
-" See hrsh7th's other plugins for more completion sources!
+  -- Some color scheme other then default
+  use("arcticicestudio/nord-vim")
+end)
 
-" To enable more of the features of rust-analyzer, such as inlay hints and more!
-Plug 'simrat39/rust-tools.nvim'
-
-" Snippet engine
-Plug 'hrsh7th/vim-vsnip'
-
-" Fuzzy finder
-" Optional
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-
-" Color scheme used in the GIFs!
-" Plug 'arcticicestudio/nord-vim'
-
-call plug#end()
+-- the first run will install packer and our plugins
+if packer_bootstrap then
+  require("packer").sync()
+  return
+end
 ```
 
-To install the above run the `:PlugInstall` command in neovim, or start it with `nvim +PlugInstall`.
+To install the above run the `:PackerUpdate` command in neovim, or start it with `nvim +PackerUpdate`.
 
 Let's setup the rust-analyzer LSP and start configuring the completion
 
-```vim
-" Set completeopt to have a better completion experience
-" :help completeopt
-" menuone: popup even when there's only one match
-" noinsert: Do not insert text until a selection is made
-" noselect: Do not auto-select, nvim-cmp plugin will handle this for us.
-set completeopt=menuone,noinsert,noselect
+```lua
+-- Set completeopt to have a better completion experience
+-- :help completeopt
+-- menuone: popup even when there's only one match
+-- noinsert: Do not insert text until a selection is made
+-- noselect: Do not auto-select, nvim-cmp plugin will handle this for us.
+vim.o.completeopt = "menuone,noinsert,noselect"
 
-" Avoid showing extra messages when using completion
-set shortmess+=c
+-- Avoid showing extra messages when using completion
+vim.opt.shortmess = vim.opt.shortmess + "c"
 
-" Configure LSP through rust-tools.nvim plugin.
-" rust-tools will configure and enable certain LSP features for us.
-" See https://github.com/simrat39/rust-tools.nvim#configuration
-lua <<EOF
-local nvim_lsp = require'lspconfig'
+local function on_attach(client, buffer)
+  -- This callback is called when the LSP is atttached/enabled for this buffer
+  -- we could set keymaps related to LSP, etc here.
+end
 
+-- Configure LSP through rust-tools.nvim plugin.
+-- rust-tools will configure and enable certain LSP features for us.
+-- See https://github.com/simrat39/rust-tools.nvim#configuration
 local opts = {
-    tools = { -- rust-tools options
-        autoSetHints = true,
-        hover_with_actions = true,
-        inlay_hints = {
-            show_parameter_hints = false,
-            parameter_hints_prefix = "",
-            other_hints_prefix = "",
-        },
+  tools = {
+    runnables = {
+      use_telescope = true,
     },
+    inlay_hints = {
+      auto = true,
+      show_parameter_hints = false,
+      parameter_hints_prefix = "",
+      other_hints_prefix = "",
+    },
+  },
 
-    -- all the opts to send to nvim-lspconfig
-    -- these override the defaults set by rust-tools.nvim
-    -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
-    server = {
-        -- on_attach is a callback called when the language server attachs to the buffer
-        -- on_attach = on_attach,
-        settings = {
-            -- to enable rust-analyzer settings visit:
-            -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-            ["rust-analyzer"] = {
-                -- enable clippy on save
-                checkOnSave = {
-                    command = "clippy"
-                },
-            }
-        }
+  -- all the opts to send to nvim-lspconfig
+  -- these override the defaults set by rust-tools.nvim
+  -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
+  server = {
+    -- on_attach is a callback called when the language server attachs to the buffer
+    on_attach = on_attach,
+    settings = {
+      -- to enable rust-analyzer settings visit:
+      -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+      ["rust-analyzer"] = {
+        -- enable clippy on save
+        checkOnSave = {
+          command = "clippy",
+        },
+      },
     },
+  },
 }
 
-require('rust-tools').setup(opts)
-EOF
+require("rust-tools").setup(opts)
 
-" Setup Completion
-" See https://github.com/hrsh7th/nvim-cmp#basic-configuration
-lua <<EOF
-local cmp = require'cmp'
+-- Setup Completion
+-- See https://github.com/hrsh7th/nvim-cmp#basic-configuration
+local cmp = require("cmp")
 cmp.setup({
-  -- Enable LSP snippets
+  preselect = cmp.PreselectMode.None,
   snippet = {
     expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
+      vim.fn["vsnip#anonymous"](args.body)
     end,
   },
   mapping = {
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
+    ["<C-p>"] = cmp.mapping.select_prev_item(),
+    ["<C-n>"] = cmp.mapping.select_next_item(),
     -- Add tab support
-    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-    ['<Tab>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({
+    ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+    ["<Tab>"] = cmp.mapping.select_next_item(),
+    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<C-e>"] = cmp.mapping.close(),
+    ["<CR>"] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Insert,
       select = true,
-    })
+    }),
   },
 
   -- Installed sources
   sources = {
-    { name = 'nvim_lsp' },
-    { name = 'vsnip' },
-    { name = 'path' },
-    { name = 'buffer' },
+    { name = "nvim_lsp" },
+    { name = "vsnip" },
+    { name = "path" },
+    { name = "buffer" },
   },
 })
-EOF
 ```
 
 Now when nvim is restarted, you should be able to autocomplete and view warnings
@@ -212,45 +239,56 @@ And inlay hints!
 
 ![image of inlay hints](/neovim-rust/inlayhints.png "Inlay Hints")
 
+What about key maps and code navigation? (`:help lsp`)
 
-What about code navigation? (`:help lsp`)
+This can be added to the `on_attach` callback, we only want these keymaps to be
+available when the LSP is attached to the buffer.
 
-```vim
-" Code navigation shortcuts
-nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
+```lua
+local keymap_opts = { buffer = buffer }
+-- Code navigation and shortcuts
+vim.keymap.set("n", "<c-]>", vim.lsp.buf.definition, keymap_opts)
+vim.keymap.set("n", "K", vim.lsp.buf.hover, keymap_opts)
+vim.keymap.set("n", "gD", vim.lsp.buf.implementation, keymap_opts)
+vim.keymap.set("n", "<c-k>", vim.lsp.buf.signature_help, keymap_opts)
+vim.keymap.set("n", "1gD", vim.lsp.buf.type_definition, keymap_opts)
+vim.keymap.set("n", "gr", vim.lsp.buf.references, keymap_opts)
+vim.keymap.set("n", "g0", vim.lsp.buf.document_symbol, keymap_opts)
+vim.keymap.set("n", "gW", vim.lsp.buf.workspace_symbol, keymap_opts)
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, keymap_opts)
 ```
 
 ![gif of code navigation](/neovim-rust/code_nav.gif "Code Navigation")
 
 Code actions are also very useful.
 
-```vim
-nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
+```lua
+vim.keymap.set("n", "ga", vim.lsp.buf.code_action, keymap_opts)
 ```
 
 ![gif of code actions](/neovim-rust/code_action.gif "Code Action")
 
 
-Let's improve the diagnostics experience.
+Let's improve the diagnostics experience. Same with the keymaps, we could add
+this to the `on_attach` callback.
 
-```vim
-" Set updatetime for CursorHold
-" 300ms of no cursor movement to trigger CursorHold
-set updatetime=300
-" Show diagnostic popup on cursor hold
-autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
+```lua
+-- Set updatetime for CursorHold
+-- 300ms of no cursor movement to trigger CursorHold
+vim.opt.updatetime = 100
 
-" Goto previous/next diagnostic warning/error
-nnoremap <silent> g[ <cmd>lua vim.diagnostic.goto_prev()<CR>
-nnoremap <silent> g] <cmd>lua vim.diagnostic.goto_next()<CR>
+-- Show diagnostic popup on cursor hover
+local diag_float_grp = vim.api.nvim_create_augroup("DiagnosticFloat", { clear = true })
+vim.api.nvim_create_autocmd("CursorHold", {
+  callback = function()
+   vim.diagnostic.open_float(nil, { focusable = false })
+  end,
+  group = diag_float_grp,
+})
+
+-- Goto previous/next diagnostic warning/error
+vim.keymap.set("n", "g[", vim.diagnostic.goto_prev, keymap_opts)
+vim.keymap.set("n", "g]", vim.diagnostic.goto_next, keymap_opts)
 ```
 
 ![gif of diagnostics](/neovim-rust/diagnostic.gif "Diagnostics")
@@ -259,10 +297,10 @@ You may notice, there's a slight vertical jitter when a new diagnostic comes in.
 
 To avoid this, you can set `signcolumn`
 
-```rust
-" have a fixed column for the diagnostics to appear in
-" this removes the jitter when warnings/errors flow in
-set signcolumn=yes
+```lua
+-- have a fixed column for the diagnostics to appear in
+-- this removes the jitter when warnings/errors flow in
+vim.wo.signcolumn = "yes"
 ```
 
 # What's Next?
@@ -275,8 +313,14 @@ The built in neovim LSP combined with neovim features can be very powerful.
 
 Here's an example of "format-on-write" (with a timeout of 200ms)
 
-```vim
-autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 200)
+```lua
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.rs",
+  callback = function()
+   vim.lsp.buf.formatting_sync(nil, 200)
+  end,
+  group = format_sync_grp,
+})
 ```
 
 Check out `:help lsp` for more information!
@@ -286,7 +330,6 @@ Check out `:help lsp` for more information!
 
 **Fuzzy finding**
 - [telescope](https://github.com/nvim-telescope/telescope.nvim)
-
 
 **Debugging**
 - [nvim-dap](https://github.com/mfussenegger/nvim-dap)
@@ -309,6 +352,7 @@ Thanks for reading!
 Questions? Found an error? [Create an issue on Github!](https://github.com/sharksforarms/sharksforarms.github.io/issues/new)
 
 Edits:
+- 2022-10-22: Convert viml to ✨lua✨
 - 2022-01-09: Use `vim.diagnostic.open_float` instead of `vim.lsp.diagnostic.show_line_diagnostics` See [neovim/neovim#15154](https://github.com/neovim/neovim/issues/15154)
 - 2021-10-11: Removed references to nightly and added formatting example
 - 2021-09-06: Added "what next" section
