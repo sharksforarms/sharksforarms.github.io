@@ -4,8 +4,8 @@ date = "2020-09-21"
 author = "sharksforarms"
 authorTwitter = "sharksforarms"
 cover = ""
-tags = ["vim", "neovim", "rust"]
-keywords = ["vim", "neovim", "rust"]
+tags = ["neovim", "rust"]
+keywords = ["vim", "neovim", "rust", "lua", "lsp"]
 description = """An effective Rust development experience with Neovim LSP client
 and rust-analyzer"""
 showFullContent = false
