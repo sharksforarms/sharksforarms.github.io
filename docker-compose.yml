@@ -2,7 +2,8 @@ version: "3"
 
 services:
   hugoapp:
-    image: klakegg/hugo:latest
+    # image: klakegg/hugo:latest
+    build: .
     container_name: ${SITE}
     command: server
     volumes: 
