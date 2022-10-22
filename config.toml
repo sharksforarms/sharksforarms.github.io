@@ -10,6 +10,7 @@ pygmentsstyle = "monokai"
 pygmentscodefences = true
 pygmentscodefencesguesssyntax = true
 enableEmoji = true
+enableGitInfo = true
 
 [params]
   author = "Emmanuel Thompson"
