@@ -2,8 +2,7 @@ version: "3"
 
 services:
   hugoapp:
-    # we need extended, and nodejs for sass!
-    image: klakegg/hugo:ext-nodejs
+    image: klakegg/hugo:latest
     container_name: ${SITE}
     command: server
     volumes: 

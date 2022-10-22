@@ -1,85 +1,151 @@
-# https://github.com/panr/hugo-theme-terminal#how-to-configure
-
 baseurl = "/"
-languageCode = "en-us"
-theme = "terminal"
-paginate = 5
-enableGitInfo = true
+title = "sharksforarms"
+theme = "hugo-coder"
+languagecode = "en"
+defaultcontentlanguage = "en"
+
+paginate = 20
+
+pygmentsstyle = "monokai"
+pygmentscodefences = true
+pygmentscodefencesguesssyntax = true
+enableEmoji = true
 
 [params]
-  # dir name of your main content (default is `content/posts`).
-  # the list of set content will show up on your index page (baseurl).
-  contentTypeName = "posts"
+  author = "Emmanuel Thompson"
+  info = "Systems development and Rustacean 🦀"
+  description = "A dev blog"
+  keywords = "blog,developer,personal"
+  avatarurl = "avatar.jpg"
 
-  # ["orange", "blue", "red", "green", "pink"]
-  themeColor = "orange"
+  favicon_32 = "favicon.png"
+  favicon_16 = "favicon.png"
 
-  # if you set this to 0, only submenu trigger will be visible
-  showMenuItems = 3
+  since = 2020
 
-  # show selector to switch language
-  showLanguageSelector = false
+  enableTwemoji = true
 
-  # set theme to full screen width
-  fullWidthTheme = false
+  colorScheme = "dark"
+  hidecolorschemetoggle = false
 
-  # center theme with default width
-  centerTheme = true
+  customCSS = ["css/custom.css"]
+  # customSCSS = ["scss/custom.scss"]
+  # customJS = ["js/custom.js"]
 
-  # set a custom favicon (default is a `themeColor` square)
-  favicon = "favicon.png"
+[taxonomies]
+  category = "categories"
+  series = "series"
+  tag = "tags"
+  author = "authors"
 
-  # set post to show the last updated
-  # If you use git, you can set `enableGitInfo` to `true` and then post will automatically get the last updated
-  showLastUpdated = true
-  # Provide a string as a prefix for the last update date. By default, it looks like this: 2020-xx-xx [Updated: 2020-xx-xx] :: Author
-  # updatedDatePrefix = "Updated"
+# Social links
+[[params.social]]
+  name = "Github"
+  icon = "fa fa-github fa-2x"
+  weight = 1
+  url = "https://github.com/sharksforarms/"
+[[params.social]]
+  name = "Twitter"
+  icon = "fa fa-twitter fa-2x"
+  weight = 2
+  url = "https://twitter.com/sharksforarms/"
 
-  # set all headings to their default size (depending on browser settings)
-  # it's set to `true` by default
-  # oneHeadingSize = false
+# Menu links
+[[menu.main]]
+  name = "Blog"
+  weight = 1
+  url  = "posts/"
+[[menu.main]]
+  name = "About"
+  weight = 2
+  url = "about/"
+[[menu.main]]
+  name = "Contact"
+  weight = 3
+  url = "contact/"
 
-[params.twitter]
-  # set Twitter handles for Twitter cards
-  # see https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started#card-and-content-attribution
-  # do not include @
-  creator = "sharksforarms"
-  site = "sharksforarms"
+# https://github.com/panr/hugo-theme-terminal#how-to-configure
 
-[languages]
-  [languages.en]
-    languageName = "English"
-    title = "sharksforarms"
-    subtitle = "A dev blog"
-    owner = "sharksforarms"
-    keywords = ""
-    copyright = ""
-    menuMore = "Show more"
-    readMore = "Read more"
-    readOtherPosts = "Read other posts"
-    missingContentMessage = "Page not found..."
-    missingBackButtonLabel = "Back to home page"
-
-    [languages.en.params.logo]
-      logoText = "sharksforarms"
-      logoHomeLink = "/"
-
-    [languages.en.menu]
-      [[languages.en.menu.main]]
-        identifier = "home"
-        name = "Home"
-        url = "/"
-        weight = "-3"
-
-      [[languages.en.menu.main]]
-        identifier = "about"
-        name = "About"
-        url = "/about"
-        weight = "-2"
-
-      [[languages.en.menu.main]]
-        identifier = "contact"
-        name = "Contact"
-        url = "/contact"
-        weight = "-1"
-
+#baseurl = "/"
+#languageCode = "en-us"
+#theme = "terminal"
+#paginate = 5
+#enableGitInfo = true
+#
+#[params]
+#  # dir name of your main content (default is `content/posts`).
+#  # the list of set content will show up on your index page (baseurl).
+#  contentTypeName = "posts"
+#
+#  # ["orange", "blue", "red", "green", "pink"]
+#  themeColor = "orange"
+#
+#  # if you set this to 0, only submenu trigger will be visible
+#  showMenuItems = 3
+#
+#  # show selector to switch language
+#  showLanguageSelector = false
+#
+#  # set theme to full screen width
+#  fullWidthTheme = false
+#
+#  # center theme with default width
+#  centerTheme = true
+#
+#  # set a custom favicon (default is a `themeColor` square)
+#  favicon = "favicon.png"
+#
+#  # set post to show the last updated
+#  # If you use git, you can set `enableGitInfo` to `true` and then post will automatically get the last updated
+#  showLastUpdated = true
+#  # Provide a string as a prefix for the last update date. By default, it looks like this: 2020-xx-xx [Updated: 2020-xx-xx] :: Author
+#  # updatedDatePrefix = "Updated"
+#
+#  # set all headings to their default size (depending on browser settings)
+#  # it's set to `true` by default
+#  # oneHeadingSize = false
+#
+#[params.twitter]
+#  # set Twitter handles for Twitter cards
+#  # see https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started#card-and-content-attribution
+#  # do not include @
+#  creator = "sharksforarms"
+#  site = "sharksforarms"
+#
+#[languages]
+#  [languages.en]
+#    languageName = "English"
+#    title = "sharksforarms"
+#    subtitle = "A dev blog"
+#    owner = "sharksforarms"
+#    keywords = ""
+#    copyright = ""
+#    menuMore = "Show more"
+#    readMore = "Read more"
+#    readOtherPosts = "Read other posts"
+#    missingContentMessage = "Page not found..."
+#    missingBackButtonLabel = "Back to home page"
+#
+#    [languages.en.params.logo]
+#      logoText = "sharksforarms"
+#      logoHomeLink = "/"
+#
+#    [languages.en.menu]
+#      [[languages.en.menu.main]]
+#        identifier = "home"
+#        name = "Home"
+#        url = "/"
+#        weight = "-3"
+#
+#      [[languages.en.menu.main]]
+#        identifier = "about"
+#        name = "About"
+#        url = "/about"
+#        weight = "-2"
+#
+#      [[languages.en.menu.main]]
+#        identifier = "contact"
+#        name = "Contact"
+#        url = "/contact"
+#        weight = "-1"
+#
