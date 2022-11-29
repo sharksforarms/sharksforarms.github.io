@@ -312,10 +312,11 @@ The built in neovim LSP combined with neovim features can be very powerful.
 Here's an example of "format-on-write" (with a timeout of 200ms)
 
 ```lua
+local format_sync_grp = vim.api.nvim_create_augroup("Format", {})
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*.rs",
   callback = function()
-   vim.lsp.buf.formatting_sync(nil, 200)
+    vim.lsp.buf.format({ timeout_ms = 200 })
   end,
   group = format_sync_grp,
 })
@@ -350,6 +351,7 @@ Thanks for reading!
 Questions? Found an error? [Create an issue on Github!](https://github.com/sharksforarms/sharksforarms.github.io/issues/new)
 
 Edits:
+- 2022-11-29: Fix format-on-write
 - 2022-10-22: Convert viml to ✨lua✨
 - 2022-01-09: Use `vim.diagnostic.open_float` instead of `vim.lsp.diagnostic.show_line_diagnostics` See [neovim/neovim#15154](https://github.com/neovim/neovim/issues/15154)
 - 2021-10-11: Removed references to nightly and added formatting example
